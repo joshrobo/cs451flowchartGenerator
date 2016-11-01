@@ -10,6 +10,8 @@ num_with_pt [0-9]*\.[0-9]+|[0-9]+\.[0-9]*
 %%
 
 if 		{return IF;}
+while 		{return WHILE;}
+else		{return ELSE;}
 
 {num_with_pt} {  // first
             	stringstream(yytext) >> yylval.x;  
@@ -34,7 +36,7 @@ if 		{return IF;}
 			return STRING;
 		}
 
-[-+;(){}]  	return *yytext;
+[-+;(){}i]  	return *yytext;
 
 
 [ \t\n]   	; /* skip whitespace */

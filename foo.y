@@ -11,10 +11,14 @@
 %token <i> INTEGER
 %token <s> STRING
 %token <s> IF
+%token <s> WHILE
+%token <s> ELSE
 %type <x> expr
 %type <i> iexpr
 %type <s> sexpr
 %type <s> ifexpr
+%type <s> whexpr
+%type <s> else
 
 
 %left '+'
@@ -44,7 +48,9 @@ statements:
     	|
     	;
 statement:
-	ifexpr ';' {cout << "if expression found" << endl;}
+	ifexpr '(' iexpr ')' block {cout << "if expression found" << endl;}
+	| whexpr '(' iexpr ')' block {cout << "while expression found" << endl;}
+    	| ifexpr '(' iexpr ')' block else block {cout << "if else expression found" << endl;}
     	| block
     	| ';'
     	| expr ';'           	{ cout << "floating point value " << fixed << setprecision(2) << $1 << endl; }
@@ -65,7 +71,11 @@ iexpr:
 sexpr: 
 	STRING 			{ $$ = $1; cout << $1 << endl;}
 	; 
-ifexpr: IF 			{$$ = $1;}
+ifexpr: IF		{$$ = $1;}
+	;
+whexpr: WHILE		{$$ = $1;}
+	;
+else: ELSE		{$$ = $1;}
 	;
    	 
 %%

@@ -49,7 +49,9 @@ extern int yydebug;
     FLOATPT = 259,
     INTEGER = 260,
     STRING = 261,
-    IF = 262
+    IF = 262,
+    WHILE = 263,
+    ELSE = 264
   };
 #endif
 
@@ -65,7 +67,7 @@ union YYSTYPE
 	char c;
 	int s;
 
-#line 69 "foo.tab.h" /* yacc.c:1909  */
+#line 71 "foo.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
