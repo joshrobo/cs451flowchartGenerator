@@ -35,8 +35,8 @@ else		{return ELSE;}
 			
 			return STRING;
 		}
-
-[-+;(){}i]  	return *yytext;
+[-+*/\%]		{return OP;}
+[-+;(){}]  	return *yytext;
 
 
 [ \t\n]   	; /* skip whitespace */

@@ -13,8 +13,9 @@
 %token <s> IF
 %token <s> WHILE
 %token <s> ELSE
-%type <x> expr
-%type <i> iexpr
+%token <c> OP
+%type <s> expr
+%type <s> iexpr
 %type <s> sexpr
 %type <s> ifexpr
 %type <s> whexpr
@@ -48,13 +49,13 @@ statements:
     	|
     	;
 statement:
-	ifexpr '(' iexpr ')' block {cout << "if expression found" << endl;}
-	| whexpr '(' iexpr ')' block {cout << "while expression found" << endl;}
+	ifexpr '(' iexpr ')' block 	{cout << "if expression found" << endl;}
+	| whexpr '(' iexpr ')' block 	{cout << "while expression found" << endl;}
     	| ifexpr '(' iexpr ')' block else block {cout << "if else expression found" << endl;}
     	| block
     	| ';'
     	| expr ';'           	{ cout << "floating point value " << fixed << setprecision(2) << $1 << endl; }
-    	| iexpr ';'          	{ cout << "integer value " << fixed << setprecision(0) << $1 << endl; }
+    	| iexpr ';'          	{ cout << "integer value " << fixed << setprecision(0) << lookup($1) << endl; }
     	| sexpr ';' 		{ cout  << "string value" << '"' << lookup($1) << '"' << endl; }
 	;
 expr:
@@ -64,8 +65,8 @@ expr:
     	| iexpr '+' expr     	{ $$ = $1 + $3; }
     	;
 iexpr:
-    	INTEGER              	{ $$ = $1; }
-    	| iexpr '+' iexpr    	{ $$ = $1 + $3; }
+    	INTEGER              	{ $$ = save(to_string($1)); }
+    	| iexpr '+' iexpr    	{ cout<< lookup($1); $$ = save(lookup($1)); }
     	;
 
 sexpr: 
