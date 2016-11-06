@@ -12,7 +12,9 @@ using namespace std;
 
 
 int save(string s);
+int saveOP(string s);
 string lookup(int n);
+string lookupOP(int n);
 int yylex(void);
 void yyerror(const char *);
 

@@ -35,8 +35,12 @@ else		{return ELSE;}
 			
 			return STRING;
 		}
-[-+*/\%]		{return OP;}
-[-+;(){}]  	return *yytext;
+[-+*/\%]		{
+			string s = yytext;
+			saveOP(s);
+			return OP;}
+
+[;(){}]  	return *yytext;
 
 
 [ \t\n]   	; /* skip whitespace */
