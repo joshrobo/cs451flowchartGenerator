@@ -25,20 +25,39 @@ else		{return ELSE;}
         	}
 
 
-[A-Za-z]+   {      	 
+[A-Za-z]+   {      	
+				string s = yytext;
+				yylval.s = save(s); 
             	return ID;
         	}
 
 \"[^"]*\"		{
 			string s = yytext;
-			save(s);
+			yylval.s = save(s); 
 			
 			return STRING;
 		}
+
+[-+*/\%]?=	{
+			string s = yytext;
+			yylval.s = saveOP(s);
+			return AOP; }
+
 [-+*/\%]		{
 			string s = yytext;
-			saveOP(s);
+			yylval.s = saveOP(s);
 			return OP;}
+
+==|!=|>|<|<=|>=	{
+			string s = yytext;
+			yylval.s = saveOP(s);
+			return COP; }
+
+--|\+\+		{
+			string s = yytext;
+			yylval.s = saveOP(s);
+			return IOP; }
+
 
 [;(){}]  	return *yytext;
 

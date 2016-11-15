@@ -17,5 +17,5 @@ string lookup(int n){
 	return data[n];
 }
 string lookupOP(int n){
-	return dataOP[n-1];
+	return dataOP[n];
 }

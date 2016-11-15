@@ -6,7 +6,7 @@
 }
 
 
-%token ID
+%token <s> ID
 %token <x> FLOATPT
 %token <i> INTEGER
 %token <s> STRING
@@ -14,13 +14,21 @@
 %token <s> WHILE
 %token <s> ELSE
 %token <s> OP
+%token <s> COP
+%token <s> AOP
+%token <s> IOP
 %type <s> expr
+%type <s> exp
+/*
 %type <s> oper
-%type <s> iexpr
+%type <s> coper
+%type <s> aoper
+%type <s> ioper
 %type <s> sexpr
 %type <s> ifexpr
 %type <s> whexpr
 %type <s> else
+*/
 
 
 %left '+'
@@ -50,35 +58,64 @@ statements:
     	|
     	;
 statement:
-	ifexpr '(' iexpr ')' block 	{cout << "if expression found" << endl;}
-	| whexpr '(' iexpr ')' block 	{cout << "while expression found" << endl;}
-    	| ifexpr '(' iexpr ')' block else block {cout << "if else expression found" << endl;}
+		IF '(' expr ')' block 	{cout << "if expression found" << endl;}
+		| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;}
+    	| IF '(' expr ')' block ELSE block {cout << "if else expression found" << endl;}
     	| block
     	| ';'
-    	| expr ';'           	{ cout << "floating point expression " << fixed << setprecision(2) << $1 << endl; }
-    	| iexpr ';'          	{ cout << "integer expression: " << fixed << setprecision(0) << lookup($1) << endl; }
-    	| sexpr ';' 		{ cout  << "string: " << '"' << lookup($1) << '"' << endl; }
+    	| expr ';'           	{ cout << "expression " << lookup($1) << endl; }
+    	//| iexpr ';'          	{ cout << "integer expression: " << fixed << setprecision(0) << lookup($1) << endl; }
+    	//| sexpr ';' 		{ cout  << "string: " << '"' << lookup($1) << '"' << endl; }
 	;
+
 expr:
-    	FLOATPT              	{ $$ = $1; }
-    	| expr '+' expr      	{ $$ = $1 + $3; }
-    	| expr '+' iexpr     	{ $$ = $1 + $3; }
-    	| iexpr '+' expr     	{ $$ = $1 + $3; }
-    	;
-iexpr:
-    	INTEGER              	{ $$ = save(to_string($1)); }
-    	| iexpr oper iexpr    	{ 
-    				 string s = lookup($1); 
-				  cout << "iexpr: " << s << endl;
-				  s += lookupOP($2);
-				  cout << "iexpr oper: " << s << endl;
-				  s += lookup($3);
-				  cout << "iexpr oper iexpr: " << s << endl;
-  				  $$ = save(s); }
+    	exp COP exp	{ 
+    			  	string s = lookup($1); 
+				  	//cout << "iexpr: " << s << endl;
+				  	s += lookupOP($2);
+				  	//cout << "iexpr oper: " << s << endl;
+				  	s += lookup($3);
+				  	//cout << "iexpr oper iexpr: " << s << endl;
+  				 	$$ = save(s); } 
+		| exp
+		| ID AOP exp	{
+					string s = lookup($1); 
+				  	//cout << "iexpr: " << s << endl;
+				  	s += lookupOP($2);
+				  	//cout << "iexpr oper: " << s << endl;
+				  	s += lookup($3);
+				  	//cout << "iexpr oper iexpr: " << s << endl;
+  				 	$$ = save(s); } 
     	;
 
-oper:  OP 			{ $$ = saveOP(to_string($1));}
+exp:
+    	INTEGER              	{ $$ = save(to_string($1)); }
+		| FLOATPT              	{ $$ = save(to_string($1)); }
+		| ID	              	{ $$ = $1;}
+    	| expr OP expr    	{ 
+    			  	string s = lookup($1); 
+				  	//cout << "iexpr: " << s << endl;
+				  	s += lookupOP($2);
+				  	//cout << "iexpr oper: " << s << endl;
+				  	s += lookup($3);
+				  	//cout << "iexpr oper iexpr: " << s << endl;
+  				 	$$ = save(s); }
+		| ID IOP    			{ 
+    			  	string s = lookup($1); 
+				  	//cout << "iexpr: " << s << endl;
+				  	s += lookupOP($2);
+  				 	$$ = save(s); }
+    	;
+/*
+oper:  OP 			{ $$ = $1; }
 	;
+coper: COP			{ $$ = $1; }
+	;
+aoper: AOP			{ $$ = $1; }
+	;
+ioper: IOP			{ $$ = $1; }
+	;
+
 sexpr: 
 	STRING 			{ $$ = $1; cout << $1 << endl; }
 	; 
@@ -88,6 +125,7 @@ whexpr: WHILE		{$$ = $1;}
 	;
 else: 	ELSE		{$$ = $1;}
 	;
+*/
    	 
 %%
 
