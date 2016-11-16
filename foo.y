@@ -5,10 +5,12 @@
 	int s;
 }
 
-
+%token <s> TYPE
 %token <s> ID
 %token <x> FLOATPT
 %token <i> INTEGER
+%token <s> CHAR
+%token <s> PARAMS
 %token <s> STRING
 %token <s> IF
 %token <s> WHILE
@@ -44,11 +46,8 @@
 
 program: program fndef | {cout << "program ready" << endl;}
     	;
-fndef: type ID '(' params ')' block { cout << "function defined" << endl;}
-    	;
-type:   ID
-    	;
-params: ;
+fndef: TYPE ID '(' PARAMS ')' block { cout << " function defined" << endl;}
+       	;
 
 
 block: '{' statements '}'    	 
@@ -58,7 +57,8 @@ statements:
     	|
     	;
 statement:
-		IF '(' expr ')' block 	{cout << "if expression found" << endl;}
+	TYPE ID '=' exp ';'
+		| IF '(' expr ')' block 	{cout << "if expression found" << endl;}
 		| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;}
     	| IF '(' expr ')' block ELSE block {cout << "if else expression found" << endl;}
     	| block
@@ -86,12 +86,22 @@ expr:
 				  	s += lookup($3);
 				  	//cout << "iexpr oper iexpr: " << s << endl;
   				 	$$ = save(s); } 
+		| ID '=' exp	{
+					string s = lookup($1); 
+				  	//cout << "iexpr: " << s << endl;
+				  	s += "=";
+				  	//cout << "iexpr oper: " << s << endl;
+				  	s += lookup($3);
+				  	//cout << "iexpr oper iexpr: " << s << endl;
+  				 	$$ = save(s); 
+		}
     	;
 
 exp:
     	INTEGER              	{ $$ = save(to_string($1)); }
 		| FLOATPT              	{ $$ = save(to_string($1)); }
 		| ID	              	{ $$ = $1;}
+		| CHAR			{ $$ = $1;}
     	| expr OP expr    	{ 
     			  	string s = lookup($1); 
 				  	//cout << "iexpr: " << s << endl;

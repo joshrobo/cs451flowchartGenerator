@@ -23,12 +23,29 @@ else		{return ELSE;}
             	stringstream(yytext) >> yylval.i;  
             	return INTEGER;
         	}
+\'.\'		{
+		string s = yytext;
+		yylval.s = save(s);
+		return CHAR;
+}
+		
 
-
-[A-Za-z]+   {      	
+(int|char|short|long|double|float)(\*)*	{      	
 				string s = yytext;
 				yylval.s = save(s); 
-            	return ID;
+		           	return TYPE;
+        	}
+
+((int|char|short|long|double|float)(\*)* [a-zA-Z_]+,)*(int|char|short|long|double|float)(\*)*[a-zA-Z_]+)	{
+				string s = yytext;
+				yylval.s = save(s); 
+		           	return PARAMS;
+				}
+
+[a-zA-Z_]+  	{      	
+				string s = yytext;
+				yylval.s = save(s); 
+		           	return ID;
         	}
 
 \"[^"]*\"		{
@@ -36,6 +53,9 @@ else		{return ELSE;}
 			yylval.s = save(s); 
 			
 			return STRING;
+		}
+=		{
+			return *yytext;
 		}
 
 [-+*/\%]?=	{
@@ -59,7 +79,7 @@ else		{return ELSE;}
 			return IOP; }
 
 
-[;(){}]  	return *yytext;
+[=;(){}]  	return *yytext;
 
 
 [ \t\n]   	; /* skip whitespace */

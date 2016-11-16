@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,23 +45,26 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ID = 258,
-    FLOATPT = 259,
-    INTEGER = 260,
-    STRING = 261,
-    IF = 262,
-    WHILE = 263,
-    ELSE = 264,
-    OP = 265,
-    COP = 266,
-    AOP = 267,
-    IOP = 268
+    TYPE = 258,
+    ID = 259,
+    FLOATPT = 260,
+    INTEGER = 261,
+    CHAR = 262,
+    PARAMS = 263,
+    STRING = 264,
+    IF = 265,
+    WHILE = 266,
+    ELSE = 267,
+    OP = 268,
+    COP = 269,
+    AOP = 270,
+    IOP = 271
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
+typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
 #line 1 "foo.y" /* yacc.c:1909  */
@@ -71,10 +74,8 @@ union YYSTYPE
 	char c;
 	int s;
 
-#line 75 "foo.tab.h" /* yacc.c:1909  */
+#line 78 "foo.tab.h" /* yacc.c:1909  */
 };
-
-typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
