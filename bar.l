@@ -29,6 +29,11 @@ else		{return ELSE;}
 		return CHAR;
 }
 		
+(((int|char|short|long|double|float)(\*)*[ ]+[a-zA-Z_]+[ ]*,[ ]*)*)  {
+				string s = yytext;
+				yylval.s = save(s); 
+		           	return PARAMS;
+				}
 
 (int|char|short|long|double|float)(\*)*	{      	
 				string s = yytext;
@@ -36,17 +41,13 @@ else		{return ELSE;}
 		           	return TYPE;
         	}
 
-((int|char|short|long|double|float)(\*)* [a-zA-Z_]+,)*(int|char|short|long|double|float)(\*)*[a-zA-Z_]+)	{
-				string s = yytext;
-				yylval.s = save(s); 
-		           	return PARAMS;
-				}
-
 [a-zA-Z_]+  	{      	
 				string s = yytext;
 				yylval.s = save(s); 
 		           	return ID;
         	}
+
+
 
 \"[^"]*\"		{
 			string s = yytext;

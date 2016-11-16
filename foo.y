@@ -46,9 +46,13 @@
 
 program: program fndef | {cout << "program ready" << endl;}
     	;
-fndef: TYPE ID '(' PARAMS ')' block { cout << " function defined" << endl;}
+fndef: TYPE ID '(' params ')' block { cout << "function defined" << endl;}
        	;
 
+params: PARAMS params |
+	TYPE ID |
+	
+	;
 
 block: '{' statements '}'    	 
     	;
@@ -58,8 +62,8 @@ statements:
     	;
 statement:
 	TYPE ID '=' exp ';'
-		| IF '(' expr ')' block 	{cout << "if expression found" << endl;}
-		| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;}
+	| IF '(' expr ')' block 	{cout << "if expression found" << endl;}
+	| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;}
     	| IF '(' expr ')' block ELSE block {cout << "if else expression found" << endl;}
     	| block
     	| ';'
@@ -69,52 +73,50 @@ statement:
 	;
 
 expr:
-    	exp COP exp	{ 
-    			  	string s = lookup($1); 
-				  	//cout << "iexpr: " << s << endl;
-				  	s += lookupOP($2);
-				  	//cout << "iexpr oper: " << s << endl;
-				  	s += lookup($3);
-				  	//cout << "iexpr oper iexpr: " << s << endl;
-  				 	$$ = save(s); } 
-		| exp
-		| ID AOP exp	{
-					string s = lookup($1); 
-				  	//cout << "iexpr: " << s << endl;
-				  	s += lookupOP($2);
-				  	//cout << "iexpr oper: " << s << endl;
-				  	s += lookup($3);
-				  	//cout << "iexpr oper iexpr: " << s << endl;
-  				 	$$ = save(s); } 
-		| ID '=' exp	{
-					string s = lookup($1); 
-				  	//cout << "iexpr: " << s << endl;
-				  	s += "=";
-				  	//cout << "iexpr oper: " << s << endl;
-				  	s += lookup($3);
-				  	//cout << "iexpr oper iexpr: " << s << endl;
-  				 	$$ = save(s); 
-		}
+	exp
+	| exp COP exp		{ string s = lookup($1); 
+			  	  //cout << "iexpr: " << s << endl;
+			  	  s += lookupOP($2);
+			  	  //cout << "iexpr oper: " << s << endl;
+			  	  s += lookup($3);
+			  	  //cout << "iexpr oper iexpr: " << s << endl;
+			 	  $$ = save(s); 
+				} 
+	| ID AOP exp		{ string s = lookup($1); 
+			  	  //cout << "iexpr: " << s << endl;
+			  	  s += lookupOP($2);
+			  	  //cout << "iexpr oper: " << s << endl;
+			  	  s += lookup($3);
+			  	  //cout << "iexpr oper iexpr: " << s << endl;
+			 	  $$ = save(s); 
+				} 
+	| ID '=' exp		{ string s = lookup($1); 
+			  	  //cout << "iexpr: " << s << endl;
+			  	  s += "=";
+			  	  //cout << "iexpr oper: " << s << endl;
+			  	  s += lookup($3);
+			  	  //cout << "iexpr oper iexpr: " << s << endl;
+			 	  $$ = save(s); 
+				}
     	;
 
 exp:
     	INTEGER              	{ $$ = save(to_string($1)); }
-		| FLOATPT              	{ $$ = save(to_string($1)); }
-		| ID	              	{ $$ = $1;}
-		| CHAR			{ $$ = $1;}
-    	| expr OP expr    	{ 
-    			  	string s = lookup($1); 
-				  	//cout << "iexpr: " << s << endl;
-				  	s += lookupOP($2);
-				  	//cout << "iexpr oper: " << s << endl;
-				  	s += lookup($3);
-				  	//cout << "iexpr oper iexpr: " << s << endl;
-  				 	$$ = save(s); }
-		| ID IOP    			{ 
-    			  	string s = lookup($1); 
-				  	//cout << "iexpr: " << s << endl;
-				  	s += lookupOP($2);
-  				 	$$ = save(s); }
+	| FLOATPT              	{ $$ = save(to_string($1)); }
+	| ID	              	{ $$ = $1;}
+	| CHAR			{ $$ = $1;}
+    	| expr OP expr    	{ string s = lookup($1); 
+			  	  //cout << "iexpr: " << s << endl;
+			  	  s += lookupOP($2);
+			  	  //cout << "iexpr oper: " << s << endl;
+			  	  s += lookup($3);
+			  	  //cout << "iexpr oper iexpr: " << s << endl;
+			 	  $$ = save(s); 
+				}
+	| ID IOP    		{ string s = lookup($1); 
+			  	  //cout << "iexpr: " << s << endl;
+			  	  s += lookupOP($2);
+			 	  $$ = save(s); }
     	;
 /*
 oper:  OP 			{ $$ = $1; }
