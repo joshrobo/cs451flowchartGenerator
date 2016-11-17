@@ -5,8 +5,10 @@
 	int s;
 }
 
+%token <s> VOID
 %token <s> TYPE
 %token <s> ID
+%token <s> RETURN
 %token <x> FLOATPT
 %token <i> INTEGER
 %token <s> CHAR
@@ -44,9 +46,10 @@
 %%
 
 
-program: program fndef | {cout << "program ready" << endl;}
+program: program fndef | {cout << "digraph {" << endl;}
     	;
-fndef: TYPE ID '(' params ')' block { cout << "function defined" << endl;}
+fndef: VOID ID '(' params ')' block { cout << "void function defined" << endl;}
+	| TYPE ID '(' params ')' returnblock { cout << "function defined" << endl;}
        	;
 
 params: PARAMS params |
@@ -56,13 +59,21 @@ params: PARAMS params |
 
 block: '{' statements '}'    	 
     	;
+
+returnblock: '{' statements RETURN exp';' '}'    	 
+    	;
+
 statements:
     	statements statement   	 
     	|
     	;
 statement:
 	TYPE ID '=' exp ';'
-	| IF '(' expr ')' block 	{cout << "if expression found" << endl;}
+	| ID'('params')'';'		//void function call
+	| IF '(' expr ')' block 	{cout << "if expression found ->" << endl;
+					cout << "expr= " << lookup($3) << endl; 
+
+}
 	| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;}
     	| IF '(' expr ')' block ELSE block {cout << "if else expression found" << endl;}
     	| block
@@ -73,7 +84,8 @@ statement:
 	;
 
 expr:
-	exp
+	exp			{//cout << lookup($1) << endl;
+}
 	| exp COP exp		{ string s = lookup($1); 
 			  	  //cout << "iexpr: " << s << endl;
 			  	  s += lookupOP($2);
@@ -81,6 +93,7 @@ expr:
 			  	  s += lookup($3);
 			  	  //cout << "iexpr oper iexpr: " << s << endl;
 			 	  $$ = save(s); 
+				  
 				} 
 	| ID AOP exp		{ string s = lookup($1); 
 			  	  //cout << "iexpr: " << s << endl;

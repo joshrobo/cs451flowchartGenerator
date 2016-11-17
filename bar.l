@@ -41,6 +41,18 @@ else		{return ELSE;}
 		           	return TYPE;
         	}
 
+void(\*)*	{      	
+				string s = yytext;
+				yylval.s = save(s); 
+		           	return VOID;
+        	}
+
+"return"	{      	
+				string s = yytext;
+				yylval.s = save(s); 
+		           	return RETURN;
+        	}
+
 [a-zA-Z_]+  	{      	
 				string s = yytext;
 				yylval.s = save(s); 
