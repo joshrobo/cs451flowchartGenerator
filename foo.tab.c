@@ -143,7 +143,7 @@ int yyparse (void);
 #endif /* !YY_YY_FOO_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
-#line 41 "foo.y" /* yacc.c:358  */
+#line 44 "foo.y" /* yacc.c:358  */
 
 	#include "fubar.h"
 
@@ -446,10 +446,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    49,    49,    49,    51,    52,    55,    56,    56,    60,
-      63,    67,    68,    71,    72,    73,    77,    78,    79,    80,
-      81,    87,    89,    98,   106,   117,   118,   119,   120,   121,
-     129
+       0,    52,    52,    52,    54,    55,    58,    59,    59,    63,
+      66,    70,    71,    74,    75,    76,    82,    83,    84,    85,
+      86,    92,    94,   103,   111,   122,   123,   124,   125,   126,
+     134
 };
 #endif
 
@@ -1263,59 +1263,61 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 49 "foo.y" /* yacc.c:1646  */
+#line 52 "foo.y" /* yacc.c:1646  */
     {cout << "digraph {" << endl;}
 #line 1269 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 51 "foo.y" /* yacc.c:1646  */
+#line 54 "foo.y" /* yacc.c:1646  */
     { cout << "void function defined" << endl;}
 #line 1275 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 52 "foo.y" /* yacc.c:1646  */
+#line 55 "foo.y" /* yacc.c:1646  */
     { cout << "function defined" << endl;}
 #line 1281 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 73 "foo.y" /* yacc.c:1646  */
-    {cout << "if expression found ->" << endl;
-					cout << "expr= " << lookup((yyvsp[-2].s)) << endl; 
+#line 76 "foo.y" /* yacc.c:1646  */
+    {cout << "if_expression -> condition" << endl;
+					 cout << "condition[label =\"" << lookup((yyvsp[-2].s)) << "\"]" << endl; 
+					 cout << "condition -> block" << endl; 
+					 cout << "block [label = \"\"" << endl; 
 
 }
-#line 1290 "foo.tab.c" /* yacc.c:1646  */
+#line 1292 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 77 "foo.y" /* yacc.c:1646  */
+#line 82 "foo.y" /* yacc.c:1646  */
     {cout << "while expression found" << endl;}
-#line 1296 "foo.tab.c" /* yacc.c:1646  */
+#line 1298 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 78 "foo.y" /* yacc.c:1646  */
+#line 83 "foo.y" /* yacc.c:1646  */
     {cout << "if else expression found" << endl;}
-#line 1302 "foo.tab.c" /* yacc.c:1646  */
+#line 1304 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 81 "foo.y" /* yacc.c:1646  */
+#line 86 "foo.y" /* yacc.c:1646  */
     { cout << "expression " << lookup((yyvsp[-1].s)) << endl; }
-#line 1308 "foo.tab.c" /* yacc.c:1646  */
+#line 1310 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 87 "foo.y" /* yacc.c:1646  */
+#line 92 "foo.y" /* yacc.c:1646  */
     {//cout << lookup($1) << endl;
 }
-#line 1315 "foo.tab.c" /* yacc.c:1646  */
+#line 1317 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 89 "foo.y" /* yacc.c:1646  */
+#line 94 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  //cout << "iexpr: " << s << endl;
 			  	  s += lookupOP((yyvsp[-1].s));
@@ -1325,11 +1327,11 @@ yyreduce:
 			 	  (yyval.s) = save(s); 
 				  
 				}
-#line 1329 "foo.tab.c" /* yacc.c:1646  */
+#line 1331 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 98 "foo.y" /* yacc.c:1646  */
+#line 103 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  //cout << "iexpr: " << s << endl;
 			  	  s += lookupOP((yyvsp[-1].s));
@@ -1338,11 +1340,11 @@ yyreduce:
 			  	  //cout << "iexpr oper iexpr: " << s << endl;
 			 	  (yyval.s) = save(s); 
 				}
-#line 1342 "foo.tab.c" /* yacc.c:1646  */
+#line 1344 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 106 "foo.y" /* yacc.c:1646  */
+#line 111 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  //cout << "iexpr: " << s << endl;
 			  	  s += "=";
@@ -1351,35 +1353,35 @@ yyreduce:
 			  	  //cout << "iexpr oper iexpr: " << s << endl;
 			 	  (yyval.s) = save(s); 
 				}
-#line 1355 "foo.tab.c" /* yacc.c:1646  */
+#line 1357 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 117 "foo.y" /* yacc.c:1646  */
+#line 122 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(to_string((yyvsp[0].i))); }
-#line 1361 "foo.tab.c" /* yacc.c:1646  */
+#line 1363 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 118 "foo.y" /* yacc.c:1646  */
+#line 123 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(to_string((yyvsp[0].x))); }
-#line 1367 "foo.tab.c" /* yacc.c:1646  */
+#line 1369 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 119 "foo.y" /* yacc.c:1646  */
+#line 124 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = (yyvsp[0].s);}
-#line 1373 "foo.tab.c" /* yacc.c:1646  */
+#line 1375 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 120 "foo.y" /* yacc.c:1646  */
+#line 125 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = (yyvsp[0].s);}
-#line 1379 "foo.tab.c" /* yacc.c:1646  */
+#line 1381 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 121 "foo.y" /* yacc.c:1646  */
+#line 126 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  //cout << "iexpr: " << s << endl;
 			  	  s += lookupOP((yyvsp[-1].s));
@@ -1388,20 +1390,20 @@ yyreduce:
 			  	  //cout << "iexpr oper iexpr: " << s << endl;
 			 	  (yyval.s) = save(s); 
 				}
-#line 1392 "foo.tab.c" /* yacc.c:1646  */
+#line 1394 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 129 "foo.y" /* yacc.c:1646  */
+#line 134 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-1].s)); 
 			  	  //cout << "iexpr: " << s << endl;
 			  	  s += lookupOP((yyvsp[0].s));
 			 	  (yyval.s) = save(s); }
-#line 1401 "foo.tab.c" /* yacc.c:1646  */
+#line 1403 "foo.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1405 "foo.tab.c" /* yacc.c:1646  */
+#line 1407 "foo.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1629,7 +1631,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 155 "foo.y" /* yacc.c:1906  */
+#line 160 "foo.y" /* yacc.c:1906  */
 
 
 

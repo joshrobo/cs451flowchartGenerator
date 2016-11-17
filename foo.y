@@ -21,6 +21,9 @@
 %token <s> COP
 %token <s> AOP
 %token <s> IOP
+%type <s> block
+%type <s> statements
+%type <s> statement
 %type <s> expr
 %type <s> exp
 /*
@@ -70,8 +73,10 @@ statements:
 statement:
 	TYPE ID '=' exp ';'
 	| ID'('params')'';'		//void function call
-	| IF '(' expr ')' block 	{cout << "if expression found ->" << endl;
-					cout << "expr= " << lookup($3) << endl; 
+	| IF '(' expr ')' block 	{cout << "if_expression -> condition" << endl;
+					 cout << "condition[label =\"" << lookup($3) << "\"]" << endl; 
+					 cout << "condition -> block" << endl; 
+					 cout << "block [label = \"\"]" << endl; 
 
 }
 	| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;}
