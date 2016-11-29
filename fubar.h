@@ -23,5 +23,6 @@ string lookupStatement(int n);
 string lookupStatements(int n);
 int yylex(void);
 void yyerror(const char *);
+int count();
 
 #endif

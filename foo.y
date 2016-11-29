@@ -67,41 +67,52 @@ returnblock: '{' statements RETURN exp';' '}'
     	;
 
 statements:
-    	statements statement   	{ $$ = saveStatements(lookupStatements($1) + "\\n" + lookup($2));   
+    	statements statement   	{ $$ = saveStatements(lookupStatements($1) + lookup($2) + "\\n");   
 				} 
     	| 			{ $$ = saveStatements("");}
     	;
 statement:
-	TYPE ID '=' exp ';'		
-	| ID'('params')'';'		//void function call
-	| IF '(' expr ')' block 	{cout << "if_expression -> condition" << endl;
-					 cout << "condition[label =\"" << lookup($3) << "\"]" << endl; 
-					 cout << "condition -> block" << endl; 
-					 cout << "block [label = \"" <<  lookupBlock($5) << "\"]" << endl; 
+	//assignment 
+	TYPE ID '=' exp ';'
+	//void function call		
+	| ID'('params')'';'
+	//non-void function call
+	| ID '=' ID'('params')'';'
+	//if expression		
+	| IF '(' expr ')' block 	{int n = count();
+					 cout << "if_expression" << n << " -> condition" << n << endl;
+					 cout << "condition" << n << "[label =\"" << lookup($3) << "\"]" << endl; 
+					 cout << "condition" << n << " -> block" << n << endl; 
+					 cout << "block" << n << "[label = \"" <<  lookupBlock($5) << "\"]" << endl; 
+										}
+	//while expression
+	| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;
+					}
+	//if_else expression
+    	| IF '(' expr ')' block ELSE block {cout << "if else expression found" << endl;
+					   }
 
-}
-	| WHILE '(' expr ')' block 	{cout << "while expression found" << endl;}
-    	| IF '(' expr ')' block ELSE block {cout << "if else expression found" << endl;}
     	| block
     	| ';'
     	| expr ';'           	{ $$ = save(lookup($1)+";"); }
-    	//| iexpr ';'          	{ cout << "integer expression: " << fixed << setprecision(0) << lookup($1) << endl; }
-    	//| sexpr ';' 		{ cout  << "string: " << '"' << lookup($1) << '"' << endl; }
 	;
 
 expr:
 	exp			{ $$ = save(lookup($1)); }
 	
+	//expression using comparsion operators
 	| exp COP exp		{ string s = lookup($1); 
 			  	  s += lookupOP($2);
 			  	  s += lookup($3);
-			 	  $$ = save(s);   
-				} 
+			 	  $$ = save(s); }  
+
+	//expression using arithmetic operators	(eg. +=, -=)		
 	| ID AOP exp		{ string s = lookup($1); 
 			  	  s += lookupOP($2);
 			  	  s += lookup($3);
 			 	  $$ = save(s); 
 				} 
+	//assignment operator
 	| ID '=' exp		{ string s = lookup($1); 
 			  	  s += "=";
 			  	  s += lookup($3);
@@ -119,11 +130,12 @@ exp:
 			  	  s += lookup($3);
 			 	  $$ = save(s); 
 				}
+	//increment operator
 	| ID IOP    		{ string s = lookup($1); 
 			  	  s += lookupOP($2);
 			 	  $$ = save(s); 
 				}
-	STRING			{ $$ = $1; }
+	//STRING			{ $$ = $1; }
     	;	 
 %%
 
