@@ -630,10 +630,14 @@ int main(void) {
 	for(int i = 0; i < atDepthSize; i++) {
 		atDepth[i] = 0;
 	}
+<<<<<<< HEAD
 	for(int i = 0; i < storeCurrentSize; i++) {
 		storeCurrent[i] = 0;
 	}
 
+=======
+	
+>>>>>>> e1af1da07d0754c19346c194bafa010e87890907
 	yyparse();
 	//end digraph
 	fprintf(fchart, "}");
