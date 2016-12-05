@@ -1,15 +1,26 @@
 digraph {
 node [shape=circle]
-1->2
-1[label = "junk=1"]2->3
-2[label = "junk=2"]3->4
-3[label = "junk=3"]5->6
-5[label = "junk=4"]6->7
-6[label = "junk=5"]7->8
-7[label = "junk=6"]9->10
-9[label = "junk=7"]8->9
-8[label = "1+2"]8->10
+0->1
+0[label = "main"]1->2
+1[label = "junk=0", shape = "rectangle"]
+3->4
+3[label = "junk=1", shape = "rectangle"]
+4->5
+4[label = "junk=2", shape = "rectangle"]
+6->7
+6[label = "junk=3", shape = "rectangle"]
+     7[label = "junk=101", shape = "rectangle"]
+5->6[label=true]
+5[label = "2+2", shape=diamond]7->5
+5[label = "2+2"]5->8[label = false]
+     8[label = "junk=100", shape = "rectangle"]
+2->3[label="true"]
+2[label = "1+1",  shape = "diamond"]9->10
+9[label = "junk=5", shape = "rectangle"]
+2->9[label="false"]
+8->10
 10->11
-10[label = "junk=8"]4->5
-4[label = "1+1"]4->10
-}
+10[label = "junk=6", shape = "rectangle"]
+11->12
+11[label = "junk=7", shape = "rectangle"]
+12[label = "end_void"]}
