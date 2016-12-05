@@ -44,14 +44,23 @@
 
 %{
 	#include "fubar.h"
+	//open file to write digraph to
 	FILE *fchart = fopen("fchart.dot", "w");
+	//position of final node at the end of top level control structures
 	int nc = 0;
+	//recursive depth
 	int depth = 0;
+	//maximum recursive depth in this recursion
 	int maxdepth = 0;
+	//maximum node, place to continue after recursion complete
 	int maxnode = 0;
 	//assumes a recursive depth of less than 101
+	//holds the number of junk (non-control) nodes at each level
 	int junk[100];
 	int junkSize = sizeof(junk)/sizeof(junk[0]);
+	//number of control nodes at each level
+	int atDepth[100];
+	int atDepthSize = sizeof(atDepth)/sizeof(atDepth[0]);
 %}
 
 
@@ -93,38 +102,48 @@ statement:
 	| IF sexpr block 	
 	{
 		//cout << depth << "\n";
-		//determine current node based on depth
-		int current = nc + depth;
+		//determine current node
+		int current = nc;
+		//depth - 1 since depth is incremented before code run
+		//add number of junk nodes
 		for(int i = depth - 1; i >= 0; i--) {
 			current += junk[i];
 		}
-		/*
-		int top = nc + depth;
+
+		
+		//add number of control nodes
 		for(int i = depth - 1; i >= 0; i--) {
-			top += junk[i];
+			current += atDepth[i];
 		}
-*/
+
+		//add node to graph linking to statements if true
 		fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", current, current + 1, current, lookup($2).c_str());
 
 
-		//check if end node highest
+		//check if end node highest, else swap end node
 		if(current + 1 + junk[depth] > maxnode) {
 			maxnode = current + junk[depth] + 1;
 		}
+		//connect false part to end of if statement
 		fprintf(fchart, "%d->%d\n", current, maxnode);
-		
+		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
 		}
 
-		//junk[depth] = 0;
-
+		
+		//drop to next level
 		depth--;
-		//set node count at end of recursion to highest numbered node
+		
+		//reset everything if bottom of recursion
 		if(depth == 0) {
 			for(int i = maxdepth; i >= 0; i--) {
 				junk[i] = 0;
 			}
+			for(int i = maxdepth; i >= 0; i--) {
+				atDepth[i] = 0;
+			}
+			//set node count at end of recursion to highest numbered node
 			nc = maxnode;
 			maxnode = 0;
 			junk[depth] = 0;
@@ -143,21 +162,31 @@ statement:
     	| expr ';'           	
 		{ 
 			$$ = save(lookup($1)+";");
-			
+			//check if greatest recursive depth
 			if(depth > maxdepth){
 				maxdepth = depth;
 			}
-
-			int current = nc + maxdepth;
+			//get current node
+			int current = nc;
+			//increment number of junk nodes at this level
 			junk[depth]++;
-
-			
-
+			//add number of junk nodes at all reached recursive levels
 			for(int i = maxdepth; i >= 0; i--) {
 				current += junk[i];
 			}
+			//add number of control nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+			current += atDepth[i];
+			}
+			//if this is the last node increase last node
+			if(current + 1 > maxnode) {
+				maxnode = current + 1;
+			}
+
 			
-//cout << maxdepth;
+			//cout << maxdepth;
+
+			//add junk node to the graph
 			fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", current, current + 1, current, lookup($1).c_str());
 		}
 	;
@@ -189,6 +218,8 @@ expr:
 sexpr:
 	'(' exp ')'	{ 
 					$$ = save(lookup($2)); 
+					//increment number of control nodes at this depth and increment depth
+					atDepth[depth]++;
 					depth++;
 				}
 	
@@ -198,6 +229,8 @@ sexpr:
 						  	  	s += lookupOP($3);
 						  	  	s += lookup($4);
 						 	  	$$ = save(s); 
+								//increment number of control nodes at this depth and increment depth
+								atDepth[depth]++;
 								depth++;
 							}  
 
@@ -207,6 +240,8 @@ sexpr:
 					  	  		s += lookupOP($3);
 					  	  		s += lookup($4);
 					 	  		$$ = save(s);
+								//increment number of control nodes at this depth and increment depth
+								atDepth[depth]++;
 								depth++; 
 							} 
 	//assignment operator
@@ -215,6 +250,8 @@ sexpr:
 					  	  		s += "=";
 					  	  		s += lookup($4);
 					 	  		$$ = save(s); 
+								//increment number of control nodes at this depth and increment depth
+								atDepth[depth]++;
 								depth++;
 							}
     	;
@@ -244,12 +281,19 @@ void yyerror(const char *s) {
 
 
 int main(void) {
+	//initialize digraph
 	fprintf(fchart, "digraph {\nnode [shape=circle]\n");
+	//initialize arrays
 	for(int i = 0; i < junkSize; i++) {
 		junk[i] = 0;
 	}
+	for(int i = 0; i < atDepthSize; i++) {
+		atDepth[i] = 0;
+	}
 	yyparse();
+	//end digraph
 	fprintf(fchart, "}");
+	//close file
 	fclose(fchart);
 	return 0;
 }
