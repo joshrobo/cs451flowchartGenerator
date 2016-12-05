@@ -290,6 +290,7 @@ int main(void) {
 	for(int i = 0; i < atDepthSize; i++) {
 		atDepth[i] = 0;
 	}
+	
 	yyparse();
 	//end digraph
 	fprintf(fchart, "}");
