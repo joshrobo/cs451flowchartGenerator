@@ -1,0 +1,10 @@
+digraph {
+node [shape=circle]
+start->0
+0->1->1[label=a]
+{0,1,2,3,4}->2[label=b]
+{0,1,2,3,4}->3[label=c]
+3->4[label=d]
+start[shape=none]
+2,3,4[shape=doublecircle]
+}

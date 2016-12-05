@@ -9,7 +9,7 @@ num_with_pt [0-9]*\.[0-9]+|[0-9]+\.[0-9]*
 
 %%
 
-if 		{return IF;}
+if 			{return IF;}
 while 		{return WHILE;}
 else		{return ELSE;}
 
