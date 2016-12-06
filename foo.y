@@ -13,6 +13,7 @@
 %token <i> INTEGER
 %token <s> CHAR
 %token <s> PARAMS
+%token <s> CALLPARAMS
 %token <s> STRING
 %token <s> IF
 %token <s> WHILE
@@ -22,6 +23,8 @@
 %token <s> AOP
 %token <s> IOP
 %type <s> block
+%type <s> params
+%type <s> callparams
 %type <s> statements
 %type <s> statement
 %type <s> expr
@@ -84,7 +87,7 @@ fndef: void '(' params ')' block
 
 		}
 		else {
-			fprintf(fchart, "%d[label = \"end_void\"]", nc);
+			fprintf(fchart, "%d[label = \"end_void\"]", nc + 1);
 		}
 		
 		
@@ -109,16 +112,61 @@ type:
 		//nc++;
 	};
 
-params: PARAMS params |
-	TYPE ID |
+params: PARAMS params { $$ = save(lookup($1)+lookup($2));} | 
+	TYPE ID {save(lookup($1)+ " " +lookup($2));}|
+		{$$ = save("");}
+	;
+
+callparams: CALLPARAMS callparams { $$ = save(lookup($1)+lookup($2));} |
+	ID {$$ = $1;} | 
+		{$$ = save("");}
 	
+
 	;
 
 block: '{' statements '}'   { $$ = saveBlock(lookupStatements($2));} 	 
     	;
 
-returnblock: '{' statements RETURN exp';' '}'    	 
+returnblock: '{' statements return';' '}'    	 
     	;
+
+return : RETURN exp { 
+			//$$ = save(lookup($2)+";");
+			//check if greatest recursive depth
+			if(depth > maxdepth){
+				maxdepth = depth;
+			}
+			//get current node
+			int current = nc;
+			//increment number of junk nodes at this level
+			junk[depth]++;
+			//add number of junk nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+				current += junk[i];
+			}
+			//add number of control nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+			current += atDepth[i];
+			}
+			//if this is the last node increase last node
+			if(current + 1 > maxnode) {
+				maxnode = current + 1;
+			}
+
+			
+			//cout << maxdepth;
+
+			//store position to rewind if need
+			pos = ftell(fchart);
+
+			//add junk node to the graph
+			//fprintf(fchart, "%d->%d\n", current, current + 1);
+			
+			lsize = ftell(fchart) - pos;
+
+			fprintf(fchart, "%d[label = \"return %s\", shape = \"circle\"]\n", current, lookup($2).c_str());
+			
+		};
 
 statements:
     	statements statement   	{ 
@@ -136,7 +184,7 @@ statement:
 	//assignment 
 	TYPE ID '=' exp ';'
 		{ 
-			$$ = save(lookup($1)+";");
+			//$$ = save(lookup($1)+";");
 			//check if greatest recursive depth
 			if(depth > maxdepth){
 				maxdepth = depth;
@@ -169,12 +217,12 @@ statement:
 			
 			lsize = ftell(fchart) - pos;
 
-			fprintf(fchart, "%d[label = \"%s\", shape = \"rectangle\"]\n", current, lookup($1).c_str());
+			fprintf(fchart, "%d[label = \"%s %s = %s\", shape = \"rectangle\"]\n", current, lookup($1).c_str(), lookup($2).c_str(),lookup($4).c_str());
 			
 		}
 
 	//void function call		
-	| ID'('params')'';'
+	| ID'('callparams')'';'
 		{ 
 			$$ = save(lookup($1)+";");
 			//check if greatest recursive depth
@@ -209,13 +257,13 @@ statement:
 			
 			lsize = ftell(fchart) - pos;
 
-			fprintf(fchart, "%d[label = \"%s\", shape = \"rectangle\"]\n", current, lookup($1).c_str());
+			fprintf(fchart, "%d[label = \"%s (%s)\", shape = \"rectangle\"]\n", current, lookup($1).c_str(), lookup($3).c_str());
 			
 		}
 
 
 	//non-void function call
-	| ID '=' ID'('params')'';'
+	| ID '=' ID'('callparams')'';'
 		{ 
 			$$ = save(lookup($1)+";");
 			//check if greatest recursive depth
@@ -250,7 +298,7 @@ statement:
 			
 			lsize = ftell(fchart) - pos;
 
-			fprintf(fchart, "%d[label = \"%s\", shape = \"rectangle\"]\n", current, lookup($1).c_str());
+			fprintf(fchart, "%d[label = \"%s = %s(%s)\", shape = \"rectangle\"]\n", current, lookup($1).c_str(),lookup($3).c_str(),lookup($5).c_str());
 			
 		}
 
@@ -273,7 +321,7 @@ statement:
 		}
 
 		//add node to graph linking to statements if true
-		fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", current, current + 1, current, lookup($2).c_str());
+		fprintf(fchart, "%d->%d[label = true]\n%d[label = \"%s\", shape = diamond]", current, current + 1, current, lookup($2).c_str());
 
 
 		//check if end node highest, else swap end node
@@ -281,7 +329,7 @@ statement:
 			maxnode = current + junk[depth] + 1;
 		}
 		//connect false part to end of if statement
-		fprintf(fchart, "%d->%d\n", current, maxnode);
+		fprintf(fchart, "%d->%d[label= false]\n", current, maxnode);
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
@@ -333,15 +381,26 @@ statement:
 		for(int i = depth - 1; i >= 0; i--) {
 			current += atDepth[i];
 		}
+		
+		//check if this is the maximum recursive depth
+		if(depth > maxdepth){
+			maxdepth = depth;
+		}
+
+		int something = current;
+		for(int i =depth; i <= maxdepth; i++) {
+			something += atDepth[i];
+			something += junk[i];
+		}
 
 		//add node to graph linking to statements if true
 		if(junk[depth] > 0) {
-			fprintf(fchart, "%d->%d[label=true]\n%d[label = \"%s\", shape=diamond]", current, current + 1, current, lookup($2).c_str());
+			fprintf(fchart, "%d:s->%d:n[label=true]\n%d[label = \"%s\", shape=diamond]", current, current + 1, current, lookup($2).c_str());
 
-			fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", current + junk[depth], current, current, lookup($2).c_str());
+			fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", something, current, current, lookup($2).c_str());
 		}
 		else {
-			fprintf(fchart, "%d->%d[label=true]\n%d[label = \"%s\", shape=diamond]", current, current, current, lookup($2).c_str());	
+			fprintf(fchart, "%d:w->%d:w[label=true]\n%d[label = \"%s\", shape=diamond]", current, current, current, lookup($2).c_str());	
 		}
 
 
@@ -350,11 +409,8 @@ statement:
 			maxnode = current + junk[depth] + 1;
 		}
 		//connect false part to end of if statement
-		fprintf(fchart, "%d->%d[label = false]\n", current, maxnode);
-		//check if this is the maximum recursive depth
-		if(depth > maxdepth){
-			maxdepth = depth;
-		}
+		fprintf(fchart, "%d:e->%d[label = false]\n", current, maxnode);
+		
 
 		
 		//drop to next level
@@ -630,14 +686,10 @@ int main(void) {
 	for(int i = 0; i < atDepthSize; i++) {
 		atDepth[i] = 0;
 	}
-<<<<<<< HEAD
 	for(int i = 0; i < storeCurrentSize; i++) {
 		storeCurrent[i] = 0;
 	}
 
-=======
-	
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
 	yyparse();
 	//end digraph
 	fprintf(fchart, "}");
@@ -645,6 +697,7 @@ int main(void) {
 	fclose(fchart);
 	return 0;
 }
+
 
 
 

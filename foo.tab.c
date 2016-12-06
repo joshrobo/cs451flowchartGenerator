@@ -106,14 +106,15 @@ extern int yydebug;
     INTEGER = 263,
     CHAR = 264,
     PARAMS = 265,
-    STRING = 266,
-    IF = 267,
-    WHILE = 268,
-    ELSE = 269,
-    OP = 270,
-    COP = 271,
-    AOP = 272,
-    IOP = 273
+    CALLPARAMS = 266,
+    STRING = 267,
+    IF = 268,
+    WHILE = 269,
+    ELSE = 270,
+    OP = 271,
+    COP = 272,
+    AOP = 273,
+    IOP = 274
   };
 #endif
 
@@ -129,7 +130,7 @@ union YYSTYPE
 	char c;
 	int s;
 
-#line 133 "foo.tab.c" /* yacc.c:355  */
+#line 134 "foo.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -143,7 +144,7 @@ int yyparse (void);
 #endif /* !YY_YY_FOO_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
-#line 45 "foo.y" /* yacc.c:358  */
+#line 48 "foo.y" /* yacc.c:358  */
 
 	#include "fubar.h"
 	//open file to write digraph to
@@ -163,7 +164,6 @@ int yyparse (void);
 	//number of control nodes at each level
 	int atDepth[100];
 	int atDepthSize = sizeof(atDepth)/sizeof(atDepth[0]);
-<<<<<<< HEAD
 	//stores current node for reuse in if else statements
 	int storeCurrent[100];
 	int storeCurrentSize = sizeof(storeCurrent)/sizeof(storeCurrent[0]);
@@ -171,11 +171,7 @@ int yyparse (void);
 	long int pos = 0;
 	int lsize = 0;
 
-#line 176 "foo.tab.c" /* yacc.c:358  */
-=======
-
-#line 168 "foo.tab.c" /* yacc.c:358  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+#line 175 "foo.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -417,21 +413,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   114
+#define YYLAST   113
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  26
+#define YYNTOKENS  27
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  14
+#define YYNNTS  16
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  38
+#define YYNRULES  42
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  89
+#define YYNSTATES  93
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   273
+#define YYMAXUTOK   274
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -444,15 +440,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      20,    21,     2,    19,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    24,
-       2,    25,     2,     2,     2,     2,     2,     2,     2,     2,
+      21,    22,     2,    20,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    25,
+       2,    26,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    22,     2,    23,     2,     2,     2,     2,
+       2,     2,     2,    23,     2,    24,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -467,24 +463,18 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18
+      15,    16,    17,    18,    19
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-<<<<<<< HEAD
-       0,    76,    76,    76,    78,    93,    97,   105,   112,   113,
-     113,   117,   120,   124,   129,   137,   139,   141,   143,   196,
-     265,   329,   330,   331,   374,   420,   423,   429,   435,   444,
-     452,   463,   473,   485,   486,   487,   488,   489,   495
-=======
-       0,    70,    70,    70,    72,    73,    76,    77,    77,    81,
-      84,    88,    92,    96,    98,   100,   102,   154,   157,   160,
-     161,   162,   195,   198,   204,   210,   219,   227,   238,   248,
-     260,   261,   262,   263,   264,   270
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+       0,    79,    79,    79,    81,    96,   100,   108,   115,   116,
+     117,   120,   121,   122,   127,   130,   133,   172,   177,   185,
+     225,   266,   306,   359,   436,   500,   501,   502,   545,   591,
+     594,   600,   606,   615,   623,   634,   644,   656,   657,   658,
+     659,   660,   666
 };
 #endif
 
@@ -494,10 +484,11 @@ static const yytype_uint16 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "VOID", "TYPE", "ID", "RETURN",
-  "FLOATPT", "INTEGER", "CHAR", "PARAMS", "STRING", "IF", "WHILE", "ELSE",
-  "OP", "COP", "AOP", "IOP", "'+'", "'('", "')'", "'{'", "'}'", "';'",
-  "'='", "$accept", "program", "fndef", "void", "type", "params", "block",
-  "returnblock", "statements", "statement", "else", "expr", "sexpr", "exp", YY_NULLPTR
+  "FLOATPT", "INTEGER", "CHAR", "PARAMS", "CALLPARAMS", "STRING", "IF",
+  "WHILE", "ELSE", "OP", "COP", "AOP", "IOP", "'+'", "'('", "')'", "'{'",
+  "'}'", "';'", "'='", "$accept", "program", "fndef", "void", "type",
+  "params", "callparams", "block", "returnblock", "return", "statements",
+  "statement", "else", "expr", "sexpr", "exp", YY_NULLPTR
 };
 #endif
 
@@ -507,17 +498,17 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,    43,
-      40,    41,   123,   125,    59,    61
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+      43,    40,    41,   123,   125,    59,    61
 };
 # endif
 
-#define YYPACT_NINF -39
+#define YYPACT_NINF -56
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-39)))
+  (!!((Yystate) == (-56)))
 
-#define YYTABLE_NINF -26
+#define YYTABLE_NINF -30
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -526,15 +517,16 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -39,    96,   -39,    10,    19,   -39,    13,    30,   -39,   -39,
-      47,    47,    49,    47,    57,    61,   -39,   -39,    37,    39,
-     -39,   -39,   -39,   -39,    18,    40,    82,    38,   -39,   -39,
-     -39,    72,    72,   -39,   -39,   -39,   -39,   -10,    85,    76,
-      73,    76,   -39,    47,    81,    86,    37,    37,    37,    76,
-     -39,    76,     3,    87,   -12,    76,    -5,    83,    48,    -5,
-      52,    51,   -39,    89,   -39,    87,    -5,    76,    74,    -8,
-      84,    47,    76,    76,    76,   -39,   -39,   -39,   -39,   -39,
-      88,    55,    58,    59,    90,   -39,   -39,   -39,   -39
+     -56,    65,   -56,    32,    44,   -56,   -11,    49,   -56,   -56,
+       5,     5,    74,     5,     9,    31,   -56,   -56,    61,    66,
+     -56,   -56,   -56,   -56,    37,    50,    89,    -7,   -56,   -56,
+     -56,    77,    77,   -56,   -56,   -56,   -56,    -8,    84,    73,
+      75,    76,    73,   -56,    15,    78,    83,    61,    61,    61,
+      73,   -56,    73,    10,    87,    80,    81,    73,    80,   -56,
+      15,    85,     4,    80,    48,    26,   -56,    91,   -56,    87,
+      80,    73,   -56,    -1,   -56,    79,    15,    73,    73,    73,
+     -56,   -56,   -56,   -56,    86,    30,    54,    55,    88,   -56,
+     -56,   -56,   -56
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -544,27 +536,28 @@ static const yytype_uint8 yydefact[] =
 {
        3,     0,     1,     0,     0,     2,     0,     0,     6,     7,
       10,    10,     0,    10,     0,     0,     9,     8,     0,     0,
-      14,     4,    14,     5,     0,     0,     0,    35,    34,    33,
-      36,     0,     0,    11,    22,    21,    13,     0,    25,     0,
-       0,     0,    38,    10,     0,     0,     0,     0,     0,     0,
-      23,     0,    35,     0,    25,     0,    27,     0,    35,    28,
-      35,    25,    20,    18,    19,    37,    26,     0,     0,    25,
-       0,    10,     0,     0,     0,    29,    24,    12,    15,    16,
-       0,    25,    25,    25,     0,    31,    32,    30,    17
+      18,     4,    18,     5,     0,     0,     0,    39,    38,    37,
+      40,     0,     0,    14,    26,    25,    17,     0,    29,     0,
+       0,     0,     0,    42,    13,     0,     0,     0,     0,     0,
+       0,    27,     0,    39,     0,    16,     0,     0,    31,    12,
+      13,     0,    39,    32,    39,    29,    24,    22,    23,    41,
+      30,     0,    15,    29,    11,     0,    13,     0,     0,     0,
+      33,    28,    19,    20,     0,    29,    29,    29,     0,    35,
+      36,    34,    21
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -39,   -39,   -39,   -39,   -39,   -11,    -9,   -39,    91,   -39,
-     -39,    -6,    75,   -38
+     -56,   -56,   -56,   -56,   -56,    82,   -55,   -14,   -56,   -56,
+      90,   -56,   -56,   -23,    67,   -39
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     5,     6,     7,    14,    35,    23,    24,    36,
-      46,    53,    47,    38
+      -1,     1,     5,     6,     7,    14,    61,    35,    23,    40,
+      24,    36,    47,    54,    48,    38
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -572,67 +565,70 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      15,    54,    17,    56,    51,    49,    59,    61,    51,    21,
-     -25,    51,    68,    66,    50,     8,    78,    69,    37,    37,
-      41,    42,    26,    27,     9,    28,    29,    30,    67,    59,
-      31,    32,    57,    10,    81,    82,    83,    62,    63,    64,
-      20,    33,    34,    65,    26,    27,    39,    28,    29,    30,
-      11,    12,    31,    32,    16,    41,    42,    13,    43,    20,
-      80,    22,    20,    44,    34,    41,    42,    74,    71,    72,
-      42,    51,    75,    67,    51,    51,    85,    73,    18,    86,
-      87,    52,    19,    28,    29,    30,    58,    40,    28,    29,
-      30,    60,    45,    28,    29,    30,     2,    77,    55,     3,
-       4,    51,    49,    76,    70,     0,     0,    48,    79,    84,
-       0,     0,     0,    25,    88
+      55,    37,    37,    58,    21,    74,    63,    65,    50,    12,
+      10,    42,    43,    70,    44,    13,    52,    51,    73,    45,
+      59,    84,    42,    43,    82,    76,    60,    69,    42,    43,
+      71,    18,    63,    66,    67,    68,    71,     8,    85,    86,
+      87,    26,    27,    79,    28,    29,    30,    52,    80,     9,
+      31,    32,    89,    19,    26,    27,    39,    28,    29,    30,
+      20,    33,    34,    31,    32,     2,    77,    43,     3,     4,
+      11,    52,    52,    20,    78,    34,    90,    91,    53,    16,
+      28,    29,    30,    62,    20,    28,    29,    30,    64,    22,
+      28,    29,    30,    15,    41,    17,   -29,    52,    46,    49,
+      56,    52,    57,    50,    83,    72,    81,    75,    88,     0,
+       0,     0,    25,    92
 };
 
 static const yytype_int8 yycheck[] =
 {
-      11,    39,    13,    41,    16,    15,    44,    45,    16,    18,
-      15,    16,    24,    51,    24,     5,    24,    55,    24,    25,
-      17,    18,     4,     5,     5,     7,     8,     9,    25,    67,
-      12,    13,    43,    20,    72,    73,    74,    46,    47,    48,
-      22,    23,    24,    49,     4,     5,     6,     7,     8,     9,
-      20,     4,    12,    13,     5,    17,    18,    10,    20,    22,
-      71,    22,    22,    25,    24,    17,    18,    16,    20,    17,
-      18,    16,    21,    25,    16,    16,    21,    25,    21,    21,
-      21,     5,    21,     7,     8,     9,     5,     5,     7,     8,
-       9,     5,    20,     7,     8,     9,     0,    23,    25,     3,
-       4,    16,    15,    14,    21,    -1,    -1,    32,    24,    21,
-      -1,    -1,    -1,    22,    24
+      39,    24,    25,    42,    18,    60,    45,    46,    16,     4,
+      21,    18,    19,    52,    21,    10,    17,    25,    57,    26,
+       5,    76,    18,    19,    25,    21,    11,    50,    18,    19,
+      26,    22,    71,    47,    48,    49,    26,     5,    77,    78,
+      79,     4,     5,    17,     7,     8,     9,    17,    22,     5,
+      13,    14,    22,    22,     4,     5,     6,     7,     8,     9,
+      23,    24,    25,    13,    14,     0,    18,    19,     3,     4,
+      21,    17,    17,    23,    26,    25,    22,    22,     5,     5,
+       7,     8,     9,     5,    23,     7,     8,     9,     5,    23,
+       7,     8,     9,    11,     5,    13,    16,    17,    21,    32,
+      25,    17,    26,    16,    25,    24,    15,    22,    22,    -1,
+      -1,    -1,    22,    25
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    27,     0,     3,     4,    28,    29,    30,     5,     5,
-      20,    20,     4,    10,    31,    31,     5,    31,    21,    21,
-      22,    32,    22,    33,    34,    34,     4,     5,     7,     8,
-       9,    12,    13,    23,    24,    32,    35,    37,    39,     6,
-       5,    17,    18,    20,    25,    20,    36,    38,    38,    15,
-      24,    16,     5,    37,    39,    25,    39,    31,     5,    39,
-       5,    39,    32,    32,    32,    37,    39,    25,    24,    39,
-      21,    20,    17,    25,    16,    21,    14,    23,    24,    24,
-      31,    39,    39,    39,    21,    21,    21,    21,    24
+       0,    28,     0,     3,     4,    29,    30,    31,     5,     5,
+      21,    21,     4,    10,    32,    32,     5,    32,    22,    22,
+      23,    34,    23,    35,    37,    37,     4,     5,     7,     8,
+       9,    13,    14,    24,    25,    34,    38,    40,    42,     6,
+      36,     5,    18,    19,    21,    26,    21,    39,    41,    41,
+      16,    25,    17,     5,    40,    42,    25,    26,    42,     5,
+      11,    33,     5,    42,     5,    42,    34,    34,    34,    40,
+      42,    26,    24,    42,    33,    22,    21,    18,    26,    17,
+      22,    15,    25,    25,    33,    42,    42,    42,    22,    22,
+      22,    22,    25
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    26,    27,    27,    28,    28,    29,    30,    31,    31,
-      31,    32,    33,    34,    34,    35,    35,    35,    35,    35,
-      35,    35,    35,    35,    36,    37,    37,    37,    37,    38,
-      38,    38,    38,    39,    39,    39,    39,    39,    39
+       0,    27,    28,    28,    29,    29,    30,    31,    32,    32,
+      32,    33,    33,    33,    34,    35,    36,    37,    37,    38,
+      38,    38,    38,    38,    38,    38,    38,    38,    39,    40,
+      40,    40,    40,    41,    41,    41,    41,    42,    42,    42,
+      42,    42,    42
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     2,     0,     5,     5,     2,     2,     2,     2,
-       0,     3,     6,     2,     0,     5,     5,     7,     3,     3,
-       3,     1,     1,     2,     3,     1,     3,     3,     3,     3,
-       5,     5,     5,     1,     1,     1,     1,     3,     2
+       0,     2,     1,     0,     3,     5,     2,     2,     0,     5,
+       5,     7,     3,     3,     3,     1,     1,     2,     3,     1,
+       3,     3,     3,     3,     5,     5,     5,     1,     1,     1,
+       1,     3,     2
 };
 
 
@@ -1309,14 +1305,13 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-<<<<<<< HEAD
-#line 76 "foo.y" /* yacc.c:1646  */
+#line 79 "foo.y" /* yacc.c:1646  */
     {cout << "ready" << endl; }
-#line 1305 "foo.tab.c" /* yacc.c:1646  */
+#line 1311 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 79 "foo.y" /* yacc.c:1646  */
+#line 82 "foo.y" /* yacc.c:1646  */
     { 
 		if(junk[0] != 0) {
 			nc = nc + junk[0] + 1;
@@ -1325,144 +1320,271 @@ yyreduce:
 
 		}
 		else {
-			fprintf(fchart, "%d[label = \"end_void\"]", nc);
+			fprintf(fchart, "%d[label = \"end_void\"]", nc + 1);
 		}
 		
 		
 		
 	}
-#line 1324 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 5:
-#line 93 "foo.y" /* yacc.c:1646  */
-    { cout << "function defined" << endl;}
 #line 1330 "foo.tab.c" /* yacc.c:1646  */
     break;
 
+  case 5:
+#line 96 "foo.y" /* yacc.c:1646  */
+    { cout << "function defined" << endl;}
+#line 1336 "foo.tab.c" /* yacc.c:1646  */
+    break;
+
   case 6:
-#line 98 "foo.y" /* yacc.c:1646  */
+#line 101 "foo.y" /* yacc.c:1646  */
     { 
 		
 		fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", nc, nc + 1, nc, lookup((yyvsp[0].s)).c_str());
 		//nc++;
 	}
-#line 1340 "foo.tab.c" /* yacc.c:1646  */
+#line 1346 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 106 "foo.y" /* yacc.c:1646  */
+#line 109 "foo.y" /* yacc.c:1646  */
     { 
 		
 		fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", nc, nc + 1, nc, lookup((yyvsp[0].s)).c_str());
 		//nc++;
 	}
-#line 1350 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 11:
-#line 117 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = saveBlock(lookupStatements((yyvsp[-1].s)));}
 #line 1356 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 13:
-#line 124 "foo.y" /* yacc.c:1646  */
-=======
-#line 70 "foo.y" /* yacc.c:1646  */
-    {cout << "ready" << endl; }
-#line 1302 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 4:
-#line 72 "foo.y" /* yacc.c:1646  */
-    { cout << "void function defined" << endl;}
-#line 1308 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 5:
-#line 73 "foo.y" /* yacc.c:1646  */
-    { cout << "function defined" << endl;}
-#line 1314 "foo.tab.c" /* yacc.c:1646  */
+  case 8:
+#line 115 "foo.y" /* yacc.c:1646  */
+    { (yyval.s) = save(lookup((yyvsp[-1].s))+lookup((yyvsp[0].s)));}
+#line 1362 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 81 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = saveBlock(lookupStatements((yyvsp[-1].s)));}
-#line 1320 "foo.tab.c" /* yacc.c:1646  */
+#line 116 "foo.y" /* yacc.c:1646  */
+    {save(lookup((yyvsp[-1].s))+ " " +lookup((yyvsp[0].s)));}
+#line 1368 "foo.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 117 "foo.y" /* yacc.c:1646  */
+    {(yyval.s) = save("");}
+#line 1374 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 88 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+#line 120 "foo.y" /* yacc.c:1646  */
+    { (yyval.s) = save(lookup((yyvsp[-1].s))+lookup((yyvsp[0].s)));}
+#line 1380 "foo.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 12:
+#line 121 "foo.y" /* yacc.c:1646  */
+    {(yyval.s) = (yyvsp[0].s);}
+#line 1386 "foo.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 122 "foo.y" /* yacc.c:1646  */
+    {(yyval.s) = save("");}
+#line 1392 "foo.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 127 "foo.y" /* yacc.c:1646  */
+    { (yyval.s) = saveBlock(lookupStatements((yyvsp[-1].s)));}
+#line 1398 "foo.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 16:
+#line 133 "foo.y" /* yacc.c:1646  */
+    { 
+			//$$ = save(lookup($2)+";");
+			//check if greatest recursive depth
+			if(depth > maxdepth){
+				maxdepth = depth;
+			}
+			//get current node
+			int current = nc;
+			//increment number of junk nodes at this level
+			junk[depth]++;
+			//add number of junk nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+				current += junk[i];
+			}
+			//add number of control nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+			current += atDepth[i];
+			}
+			//if this is the last node increase last node
+			if(current + 1 > maxnode) {
+				maxnode = current + 1;
+			}
+
+			
+			//cout << maxdepth;
+
+			//store position to rewind if need
+			pos = ftell(fchart);
+
+			//add junk node to the graph
+			//fprintf(fchart, "%d->%d\n", current, current + 1);
+			
+			lsize = ftell(fchart) - pos;
+
+			fprintf(fchart, "%d[label = \"return %s\", shape = \"circle\"]\n", current, lookup((yyvsp[0].s)).c_str());
+			
+		}
+#line 1440 "foo.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 172 "foo.y" /* yacc.c:1646  */
     { 
 									(yyval.s) = saveStatements(lookupStatements((yyvsp[-1].s)) + lookup((yyvsp[0].s)) + "\\n");
 									
 								}
-<<<<<<< HEAD
-#line 1365 "foo.tab.c" /* yacc.c:1646  */
+#line 1449 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 14:
-#line 129 "foo.y" /* yacc.c:1646  */
+  case 18:
+#line 177 "foo.y" /* yacc.c:1646  */
     { 
 			(yyval.s) = saveStatements("");
 				
 		}
-#line 1374 "foo.tab.c" /* yacc.c:1646  */
+#line 1458 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 15:
-#line 137 "foo.y" /* yacc.c:1646  */
-    { junk[depth]++; }
-#line 1380 "foo.tab.c" /* yacc.c:1646  */
+  case 19:
+#line 186 "foo.y" /* yacc.c:1646  */
+    { 
+			//$$ = save(lookup($1)+";");
+			//check if greatest recursive depth
+			if(depth > maxdepth){
+				maxdepth = depth;
+			}
+			//get current node
+			int current = nc;
+			//increment number of junk nodes at this level
+			junk[depth]++;
+			//add number of junk nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+				current += junk[i];
+			}
+			//add number of control nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+			current += atDepth[i];
+			}
+			//if this is the last node increase last node
+			if(current + 1 > maxnode) {
+				maxnode = current + 1;
+			}
+
+			
+			//cout << maxdepth;
+
+			//store position to rewind if need
+			pos = ftell(fchart);
+
+			//add junk node to the graph
+			fprintf(fchart, "%d->%d\n", current, current + 1);
+			
+			lsize = ftell(fchart) - pos;
+
+			fprintf(fchart, "%d[label = \"%s %s = %s\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-4].s)).c_str(), lookup((yyvsp[-3].s)).c_str(),lookup((yyvsp[-1].s)).c_str());
+			
+		}
+#line 1500 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 16:
-#line 139 "foo.y" /* yacc.c:1646  */
-    { junk[depth]++; }
-#line 1386 "foo.tab.c" /* yacc.c:1646  */
+  case 20:
+#line 226 "foo.y" /* yacc.c:1646  */
+    { 
+			(yyval.s) = save(lookup((yyvsp[-4].s))+";");
+			//check if greatest recursive depth
+			if(depth > maxdepth){
+				maxdepth = depth;
+			}
+			//get current node
+			int current = nc;
+			//increment number of junk nodes at this level
+			junk[depth]++;
+			//add number of junk nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+				current += junk[i];
+			}
+			//add number of control nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+			current += atDepth[i];
+			}
+			//if this is the last node increase last node
+			if(current + 1 > maxnode) {
+				maxnode = current + 1;
+			}
+
+			
+			//cout << maxdepth;
+
+			//store position to rewind if need
+			pos = ftell(fchart);
+
+			//add junk node to the graph
+			fprintf(fchart, "%d->%d\n", current, current + 1);
+			
+			lsize = ftell(fchart) - pos;
+
+			fprintf(fchart, "%d[label = \"%s (%s)\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-4].s)).c_str(), lookup((yyvsp[-2].s)).c_str());
+			
+		}
+#line 1542 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 17:
-#line 141 "foo.y" /* yacc.c:1646  */
-    { junk[depth]++; }
-#line 1392 "foo.tab.c" /* yacc.c:1646  */
+  case 21:
+#line 267 "foo.y" /* yacc.c:1646  */
+    { 
+			(yyval.s) = save(lookup((yyvsp[-6].s))+";");
+			//check if greatest recursive depth
+			if(depth > maxdepth){
+				maxdepth = depth;
+			}
+			//get current node
+			int current = nc;
+			//increment number of junk nodes at this level
+			junk[depth]++;
+			//add number of junk nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+				current += junk[i];
+			}
+			//add number of control nodes at all reached recursive levels
+			for(int i = maxdepth; i >= 0; i--) {
+			current += atDepth[i];
+			}
+			//if this is the last node increase last node
+			if(current + 1 > maxnode) {
+				maxnode = current + 1;
+			}
+
+			
+			//cout << maxdepth;
+
+			//store position to rewind if need
+			pos = ftell(fchart);
+
+			//add junk node to the graph
+			fprintf(fchart, "%d->%d\n", current, current + 1);
+			
+			lsize = ftell(fchart) - pos;
+
+			fprintf(fchart, "%d[label = \"%s = %s(%s)\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-6].s)).c_str(),lookup((yyvsp[-4].s)).c_str(),lookup((yyvsp[-2].s)).c_str());
+			
+		}
+#line 1584 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 18:
-#line 144 "foo.y" /* yacc.c:1646  */
-=======
-#line 1329 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 12:
-#line 92 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = saveStatements("");}
-#line 1335 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 13:
-#line 96 "foo.y" /* yacc.c:1646  */
-    { junk[depth]++; }
-#line 1341 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 14:
-#line 98 "foo.y" /* yacc.c:1646  */
-    { junk[depth]++; }
-#line 1347 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 15:
-#line 100 "foo.y" /* yacc.c:1646  */
-    { junk[depth]++; }
-#line 1353 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 16:
-#line 103 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 22:
+#line 307 "foo.y" /* yacc.c:1646  */
     {
 		//cout << depth << "\n";
 		//determine current node
@@ -1480,19 +1602,15 @@ yyreduce:
 		}
 
 		//add node to graph linking to statements if true
-		fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", current, current + 1, current, lookup((yyvsp[-1].s)).c_str());
+		fprintf(fchart, "%d->%d[label = true]\n%d[label = \"%s\", shape = diamond]", current, current + 1, current, lookup((yyvsp[-1].s)).c_str());
 
 
 		//check if end node highest, else swap end node
-<<<<<<< HEAD
 		if(current + junk[depth] + 1 > maxnode) {
-=======
-		if(current + 1 + junk[depth] > maxnode) {
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
 			maxnode = current + junk[depth] + 1;
 		}
 		//connect false part to end of if statement
-		fprintf(fchart, "%d->%d\n", current, maxnode);
+		fprintf(fchart, "%d->%d[label= false]\n", current, maxnode);
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
@@ -1511,22 +1629,17 @@ yyreduce:
 				atDepth[i] = 0;
 			}
 			//set node count at end of recursion to highest numbered node
-<<<<<<< HEAD
 			nc = maxnode - 1;
-=======
-			nc = maxnode;
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
 			maxnode = 0;
 			junk[depth] = 0;
 			maxdepth = 0;
 		}
 	}
-<<<<<<< HEAD
-#line 1447 "foo.tab.c" /* yacc.c:1646  */
+#line 1639 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 19:
-#line 197 "foo.y" /* yacc.c:1646  */
+  case 23:
+#line 360 "foo.y" /* yacc.c:1646  */
     {
 		if(junk[depth] > 0) {
 			int curPos = ftell(fchart);
@@ -1551,15 +1664,26 @@ yyreduce:
 		for(int i = depth - 1; i >= 0; i--) {
 			current += atDepth[i];
 		}
+		
+		//check if this is the maximum recursive depth
+		if(depth > maxdepth){
+			maxdepth = depth;
+		}
+
+		int something = current;
+		for(int i =depth; i <= maxdepth; i++) {
+			something += atDepth[i];
+			something += junk[i];
+		}
 
 		//add node to graph linking to statements if true
 		if(junk[depth] > 0) {
-			fprintf(fchart, "%d->%d[label=true]\n%d[label = \"%s\", shape=diamond]", current, current + 1, current, lookup((yyvsp[-1].s)).c_str());
+			fprintf(fchart, "%d:s->%d:n[label=true]\n%d[label = \"%s\", shape=diamond]", current, current + 1, current, lookup((yyvsp[-1].s)).c_str());
 
-			fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", current + junk[depth], current, current, lookup((yyvsp[-1].s)).c_str());
+			fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", something, current, current, lookup((yyvsp[-1].s)).c_str());
 		}
 		else {
-			fprintf(fchart, "%d->%d[label=true]\n%d[label = \"%s\", shape=diamond]", current, current, current, lookup((yyvsp[-1].s)).c_str());	
+			fprintf(fchart, "%d:w->%d:w[label=true]\n%d[label = \"%s\", shape=diamond]", current, current, current, lookup((yyvsp[-1].s)).c_str());	
 		}
 
 
@@ -1568,11 +1692,8 @@ yyreduce:
 			maxnode = current + junk[depth] + 1;
 		}
 		//connect false part to end of if statement
-		fprintf(fchart, "%d->%d[label = false]\n", current, maxnode);
-		//check if this is the maximum recursive depth
-		if(depth > maxdepth){
-			maxdepth = depth;
-		}
+		fprintf(fchart, "%d:e->%d[label = false]\n", current, maxnode);
+		
 
 		
 		//drop to next level
@@ -1593,11 +1714,11 @@ yyreduce:
 			maxdepth = 0;
 		}
 	}
-#line 1518 "foo.tab.c" /* yacc.c:1646  */
+#line 1718 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 20:
-#line 266 "foo.y" /* yacc.c:1646  */
+  case 24:
+#line 437 "foo.y" /* yacc.c:1646  */
     {
 		
 		//cout << depth << "\n";
@@ -1660,32 +1781,11 @@ yyreduce:
 			maxdepth = 0;
 		}
 	}
-#line 1585 "foo.tab.c" /* yacc.c:1646  */
+#line 1785 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 23:
-#line 332 "foo.y" /* yacc.c:1646  */
-=======
-#line 1408 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 17:
-#line 154 "foo.y" /* yacc.c:1646  */
-    {cout << "while expression found" << endl;
-					}
-#line 1415 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 18:
-#line 157 "foo.y" /* yacc.c:1646  */
-    {cout << "if else expression found" << endl;
-					   }
-#line 1422 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 21:
-#line 163 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 27:
+#line 503 "foo.y" /* yacc.c:1646  */
     { 
 			(yyval.s) = save(lookup((yyvsp[-1].s))+";");
 			//check if greatest recursive depth
@@ -1709,7 +1809,6 @@ yyreduce:
 				maxnode = current + 1;
 			}
 
-<<<<<<< HEAD
 			
 			//cout << maxdepth;
 
@@ -1724,11 +1823,11 @@ yyreduce:
 			fprintf(fchart, "%d[label = \"%s\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-1].s)).c_str());
 			
 		}
-#line 1627 "foo.tab.c" /* yacc.c:1646  */
+#line 1827 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 24:
-#line 375 "foo.y" /* yacc.c:1646  */
+  case 28:
+#line 546 "foo.y" /* yacc.c:1646  */
     {
 		if(junk[depth] > 0) {
 			int curPos = ftell(fchart);
@@ -1772,108 +1871,57 @@ yyreduce:
 		storeCurrent[depth - 1] = maxnode;
 
 	}
-#line 1675 "foo.tab.c" /* yacc.c:1646  */
+#line 1875 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 25:
-#line 420 "foo.y" /* yacc.c:1646  */
+  case 29:
+#line 591 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(lookup((yyvsp[0].s))); }
-#line 1681 "foo.tab.c" /* yacc.c:1646  */
+#line 1881 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 26:
-#line 423 "foo.y" /* yacc.c:1646  */
-=======
-			
-			//cout << maxdepth;
-
-			//add junk node to the graph
-			fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", current, current + 1, current, lookup((yyvsp[-1].s)).c_str());
-		}
-#line 1456 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 22:
-#line 195 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = save(lookup((yyvsp[0].s))); }
-#line 1462 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 23:
-#line 198 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 30:
+#line 594 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += lookupOP((yyvsp[-1].s));
 			  	  s += lookup((yyvsp[0].s));
 			 	  (yyval.s) = save(s); }
-<<<<<<< HEAD
-#line 1690 "foo.tab.c" /* yacc.c:1646  */
+#line 1890 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 27:
-#line 429 "foo.y" /* yacc.c:1646  */
-=======
-#line 1471 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 24:
-#line 204 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 31:
+#line 600 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += lookupOP((yyvsp[-1].s));
 			  	  s += lookup((yyvsp[0].s));
 			 	  (yyval.s) = save(s); 
 				}
-<<<<<<< HEAD
-#line 1700 "foo.tab.c" /* yacc.c:1646  */
+#line 1900 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 28:
-#line 435 "foo.y" /* yacc.c:1646  */
-=======
-#line 1481 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 25:
-#line 210 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 32:
+#line 606 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += "=";
 			  	  s += lookup((yyvsp[0].s));
 			 	  (yyval.s) = save(s); 
 				}
-<<<<<<< HEAD
-#line 1710 "foo.tab.c" /* yacc.c:1646  */
+#line 1910 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 29:
-#line 444 "foo.y" /* yacc.c:1646  */
-=======
-#line 1491 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 26:
-#line 219 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 33:
+#line 615 "foo.y" /* yacc.c:1646  */
     { 
 					(yyval.s) = save(lookup((yyvsp[-1].s))); 
 					//increment number of control nodes at this depth and increment depth
 					atDepth[depth]++;
 					depth++;
 				}
-<<<<<<< HEAD
-#line 1721 "foo.tab.c" /* yacc.c:1646  */
+#line 1921 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 30:
-#line 452 "foo.y" /* yacc.c:1646  */
-=======
-#line 1502 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 27:
-#line 227 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 34:
+#line 623 "foo.y" /* yacc.c:1646  */
     { 
 								string s = lookup((yyvsp[-3].s)); 
 						  	  	s += lookupOP((yyvsp[-2].s));
@@ -1883,19 +1931,11 @@ yyreduce:
 								atDepth[depth]++;
 								depth++;
 							}
-<<<<<<< HEAD
-#line 1735 "foo.tab.c" /* yacc.c:1646  */
+#line 1935 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 31:
-#line 463 "foo.y" /* yacc.c:1646  */
-=======
-#line 1516 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 28:
-#line 238 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 35:
+#line 634 "foo.y" /* yacc.c:1646  */
     {
 								string s = lookup((yyvsp[-3].s)); 
 					  	  		s += lookupOP((yyvsp[-2].s));
@@ -1905,19 +1945,11 @@ yyreduce:
 								atDepth[depth]++;
 								depth++; 
 							}
-<<<<<<< HEAD
-#line 1749 "foo.tab.c" /* yacc.c:1646  */
+#line 1949 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 32:
-#line 473 "foo.y" /* yacc.c:1646  */
-=======
-#line 1530 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 29:
-#line 248 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 36:
+#line 644 "foo.y" /* yacc.c:1646  */
     {
 								string s = lookup((yyvsp[-3].s)); 
 					  	  		s += "=";
@@ -1927,102 +1959,54 @@ yyreduce:
 								atDepth[depth]++;
 								depth++;
 							}
-<<<<<<< HEAD
-#line 1763 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 33:
-#line 485 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = save(to_string((yyvsp[0].i))); }
-#line 1769 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 34:
-#line 486 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = save(to_string((yyvsp[0].x))); }
-#line 1775 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 35:
-#line 487 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = (yyvsp[0].s);}
-#line 1781 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 36:
-#line 488 "foo.y" /* yacc.c:1646  */
-    { (yyval.s) = (yyvsp[0].s);}
-#line 1787 "foo.tab.c" /* yacc.c:1646  */
+#line 1963 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 489 "foo.y" /* yacc.c:1646  */
-=======
-#line 1544 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 30:
-#line 260 "foo.y" /* yacc.c:1646  */
+#line 656 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(to_string((yyvsp[0].i))); }
-#line 1550 "foo.tab.c" /* yacc.c:1646  */
+#line 1969 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 31:
-#line 261 "foo.y" /* yacc.c:1646  */
+  case 38:
+#line 657 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(to_string((yyvsp[0].x))); }
-#line 1556 "foo.tab.c" /* yacc.c:1646  */
+#line 1975 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 32:
-#line 262 "foo.y" /* yacc.c:1646  */
+  case 39:
+#line 658 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = (yyvsp[0].s);}
-#line 1562 "foo.tab.c" /* yacc.c:1646  */
+#line 1981 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 33:
-#line 263 "foo.y" /* yacc.c:1646  */
+  case 40:
+#line 659 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = (yyvsp[0].s);}
-#line 1568 "foo.tab.c" /* yacc.c:1646  */
+#line 1987 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 34:
-#line 264 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 41:
+#line 660 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += lookupOP((yyvsp[-1].s));
 			  	  s += lookup((yyvsp[0].s));
 			 	  (yyval.s) = save(s); 
 				}
-<<<<<<< HEAD
-#line 1797 "foo.tab.c" /* yacc.c:1646  */
+#line 1997 "foo.tab.c" /* yacc.c:1646  */
     break;
 
-  case 38:
-#line 495 "foo.y" /* yacc.c:1646  */
-=======
-#line 1578 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 35:
-#line 270 "foo.y" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+  case 42:
+#line 666 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-1].s)); 
 			  	  s += lookupOP((yyvsp[0].s));
 			 	  (yyval.s) = save(s); 
 				}
-<<<<<<< HEAD
-#line 1806 "foo.tab.c" /* yacc.c:1646  */
+#line 2006 "foo.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1810 "foo.tab.c" /* yacc.c:1646  */
-=======
-#line 1587 "foo.tab.c" /* yacc.c:1646  */
-    break;
-
-
-#line 1591 "foo.tab.c" /* yacc.c:1646  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+#line 2010 "foo.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2250,11 +2234,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-<<<<<<< HEAD
-#line 500 "foo.y" /* yacc.c:1906  */
-=======
-#line 275 "foo.y" /* yacc.c:1906  */
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+#line 671 "foo.y" /* yacc.c:1906  */
 
 
 
@@ -2273,14 +2253,10 @@ int main(void) {
 	for(int i = 0; i < atDepthSize; i++) {
 		atDepth[i] = 0;
 	}
-<<<<<<< HEAD
 	for(int i = 0; i < storeCurrentSize; i++) {
 		storeCurrent[i] = 0;
 	}
 
-=======
-	
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
 	yyparse();
 	//end digraph
 	fprintf(fchart, "}");
@@ -2288,6 +2264,7 @@ int main(void) {
 	fclose(fchart);
 	return 0;
 }
+
 
 
 

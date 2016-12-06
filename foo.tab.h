@@ -53,14 +53,15 @@ extern int yydebug;
     INTEGER = 263,
     CHAR = 264,
     PARAMS = 265,
-    STRING = 266,
-    IF = 267,
-    WHILE = 268,
-    ELSE = 269,
-    OP = 270,
-    COP = 271,
-    AOP = 272,
-    IOP = 273
+    CALLPARAMS = 266,
+    STRING = 267,
+    IF = 268,
+    WHILE = 269,
+    ELSE = 270,
+    OP = 271,
+    COP = 272,
+    AOP = 273,
+    IOP = 274
   };
 #endif
 
@@ -76,7 +77,7 @@ union YYSTYPE
 	char c;
 	int s;
 
-#line 80 "foo.tab.h" /* yacc.c:1909  */
+#line 81 "foo.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

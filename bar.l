@@ -35,6 +35,12 @@ else		{return ELSE;}
 		           	return PARAMS;
 				}
 
+(([a-zA-Z_]+[ ]*,[ ]*)*)  {
+				string s = yytext;
+				yylval.s = save(s); 
+		           	return CALLPARAMS;
+				}
+
 (int|char|short|long|double|float)(\*)*	{      	
 				string s = yytext;
 				yylval.s = save(s); 
