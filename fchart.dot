@@ -1,25 +1,11 @@
 digraph {
 node [shape=circle]
 0->1
-0[label = "main"]3->4
-3[label = "int b = a+1", shape = "rectangle"]
-4->5
-4[label = "f (b, a)", shape = "rectangle"]
-6->7
-6[label = "a--", shape = "rectangle"]
-5->6[label = true]
-5[label = "a", shape = diamond]5->7[label= false]
-     7[label = "b=a", shape = "rectangle"]
-2:s->3:n[label=true]
-2[label = "true", shape=diamond]7:w->2:w
-2[label = "true"]2:e->8[label = false]
-     8[label = "b = f(b,a,b)", shape = "rectangle"]
-1->2[label="true"]
-1[label = "a<2",  shape = "diamond"]9->10
-9[label = "a=b", shape = "rectangle"]
-10->11
-10[label = "b=3", shape = "rectangle"]
-1->9[label="false"]
-8->11
-11[label = "return 0", shape = "circle"]
+0[label = "main"]2->3
+2[label = "b = f(b)", shape = "rectangle"]
+     3[label = "a--", shape = "rectangle"]
+1:s->2:n[label=true]
+1[label = "a<10", shape=diamond]3:w->1:w
+1[label = "a<10"]1:e->4[label = false]
+4[label = "return 0", shape = "circle"]
 }
