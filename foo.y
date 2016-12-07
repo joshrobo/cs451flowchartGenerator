@@ -54,7 +54,7 @@
 	//recursive depth
 	int depth = 0;
 	//maximum recursive depth in this recursion
-	int maxdepth = 0;
+	//int maxdepth = 0;
 	//maximum node, place to continue after recursion complete
 	int maxnode = 0;
 	//assumes a recursive depth of less than 101
@@ -132,20 +132,17 @@ returnblock: '{' statements return';' '}'
 
 return : RETURN exp { 
 			//$$ = save(lookup($2)+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -185,20 +182,17 @@ statement:
 	TYPE ID '=' exp ';'
 		{ 
 			//$$ = save(lookup($1)+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -225,20 +219,17 @@ statement:
 	| ID'('callparams')'';'
 		{ 
 			$$ = save(lookup($1)+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -266,20 +257,17 @@ statement:
 	| ID '=' ID'('callparams')'';'
 		{ 
 			$$ = save(lookup($1)+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -330,10 +318,12 @@ statement:
 		}
 		//connect false part to end of if statement
 		fprintf(fchart, "%d->%d[label= false]\n", current, maxnode);
-		//check if this is the maximum recursive depth
-		if(depth > maxdepth){
-			maxdepth = depth;
-		}
+
+
+		junk[depth - 1] += junk[depth];
+		junk[depth] = 0;
+		atDepth[depth - 1] += atDepth[depth];
+		atDepth[depth] = 0;
 
 		
 		//drop to next level
@@ -341,17 +331,20 @@ statement:
 		
 		//reset everything if bottom of recursion
 		if(depth == 0) {
+/*
 			for(int i = maxdepth; i >= 0; i--) {
 				junk[i] = 0;
 			}
 			for(int i = maxdepth; i >= 0; i--) {
 				atDepth[i] = 0;
 			}
+*/
 			//set node count at end of recursion to highest numbered node
 			nc = maxnode - 1;
 			maxnode = 0;
 			junk[depth] = 0;
-			maxdepth = 0;
+			atDepth[depth] = 0;
+			//maxdepth = 0;
 		}
 	}
 
@@ -381,23 +374,25 @@ statement:
 		for(int i = depth - 1; i >= 0; i--) {
 			current += atDepth[i];
 		}
-		
+/*		
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
 		}
 
+
 		int something = current;
-		for(int i =depth; i <= maxdepth; i++) {
+		for(int i = depth; i <= depth; i++) {
 			something += atDepth[i];
 			something += junk[i];
 		}
+*/
 
 		//add node to graph linking to statements if true
 		if(junk[depth] > 0) {
 			fprintf(fchart, "%d:s->%d:n[label=true]\n%d[label = \"%s\", shape=diamond]", current, current + 1, current, lookup($2).c_str());
 
-			fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", something, current, current, lookup($2).c_str());
+			fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", current + junk[depth] + atDepth[depth], current, current, lookup($2).c_str());
 		}
 		else {
 			fprintf(fchart, "%d:w->%d:w[label=true]\n%d[label = \"%s\", shape=diamond]", current, current, current, lookup($2).c_str());	
@@ -411,6 +406,10 @@ statement:
 		//connect false part to end of if statement
 		fprintf(fchart, "%d:e->%d[label = false]\n", current, maxnode);
 		
+		junk[depth - 1] += junk[depth];
+		junk[depth] = 0;
+		atDepth[depth - 1] += atDepth[depth];
+		atDepth[depth] = 0;
 
 		
 		//drop to next level
@@ -418,17 +417,12 @@ statement:
 		
 		//reset everything if bottom of recursion
 		if(depth == 0) {
-			for(int i = maxdepth; i >= 0; i--) {
-				junk[i] = 0;
-			}
-			for(int i = maxdepth; i >= 0; i--) {
-				atDepth[i] = 0;
-			}
+
 			//set node count at end of recursion to highest numbered node
 			nc = maxnode - 1;
 			maxnode = 0;
 			junk[depth] = 0;
-			maxdepth = 0;
+			atDepth[depth] = 0;
 		}
 	}
 
@@ -468,11 +462,16 @@ statement:
 		else {
 			fprintf(fchart, "%d->%d[label=\"true\"]\n%d[label = \"%s\",  shape = \"diamond\"]", current, maxnode, current, lookup($1).c_str());
 		}
-
+/*
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
 		}
+*/
+		junk[depth - 1] += junk[depth];
+		junk[depth] = 0;
+		atDepth[depth - 1] += atDepth[depth];
+		atDepth[depth] = 0;
 
 		
 		//drop to next level
@@ -480,20 +479,16 @@ statement:
 		
 		//reset everything if bottom of recursion
 		if(depth == 0) {
-			for(int i = maxdepth; i >= 0; i--) {
-				junk[i] = 0;
-			}
-			for(int i = maxdepth; i >= 0; i--) {
-				atDepth[i] = 0;
-			}
+/*
 			for(int i = maxdepth; i >= 0; i--) {
 				storeCurrent[i] = 0;
 			}
+*/
 			//set node count at end of recursion to highest numbered node
 			nc = maxnode - 1;
 			maxnode = 0;
 			junk[depth] = 0;
-			maxdepth = 0;
+			atDepth[depth] = 0;
 		}
 	}
 
@@ -503,19 +498,21 @@ statement:
 		{ 
 			$$ = save(lookup($1)+";");
 			//check if greatest recursive depth
+/*
 			if(depth > maxdepth){
 				maxdepth = depth;
 			}
-			//get current node
+*/
+			//get current top node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -542,7 +539,7 @@ statement:
 
 
 else:
-	sexpr block ELSE
+	sexpr statement ELSE
 	{
 		if(junk[depth] > 0) {
 			int curPos = ftell(fchart);
@@ -576,14 +573,15 @@ else:
 		if(current + 1 + junk[depth] > maxnode) {
 			maxnode = current + junk[depth] + 1;
 		}
-
+/*
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
 		}
+*/
 
 		//store the first node of the second side
-		storeCurrent[depth - 1] = maxnode;
+		storeCurrent[depth - 1] = current + 1 + junk[depth] + atDepth[depth];
 
 	};
 

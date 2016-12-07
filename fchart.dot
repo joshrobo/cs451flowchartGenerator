@@ -2,26 +2,54 @@ digraph {
 node [shape=circle]
 0->1
 0[label = "main"]3->4
-3[label = "int b = a+1", shape = "rectangle"]
-4->5
-4[label = "f (b, a)", shape = "rectangle"]
-     6[label = "a--", shape = "rectangle"]
-5->6[label="true"]
-5[label = "a",  shape = "diamond"]7->8
-7[label = "b=a", shape = "rectangle"]
-5->7[label="false"]
-6->8
-     8[label = "a=34", shape = "rectangle"]
-2:s->3:n[label=true]
-2[label = "true", shape=diamond]8:w->2:w
-2[label = "true"]2:e->9[label = false]
-      9[label = "b = f(b,a,b)", shape = "rectangle"]
-1->2[label="true"]
-1[label = "a<2",  shape = "diamond"]10->11
-10[label = "a=b", shape = "rectangle"]
+3[label = "a+1", shape = "rectangle"]
+5->6
+5[label = "a--", shape = "rectangle"]
+4->5[label = true]
+4[label = "a", shape = diamond]4->6[label= false]
+6->7
+6[label = "a=34", shape = "rectangle"]
+2->3[label = true]
+2[label = "true", shape = diamond]2->7[label= false]
+7->8
+7[label = "b++", shape = "rectangle"]
+9->10
+9[label = "a+1", shape = "rectangle"]
 11->12
-11[label = "b=3", shape = "rectangle"]
-1->10[label="false"]
-9->12
-12[label = "return 0", shape = "circle"]
+11[label = "a--", shape = "rectangle"]
+10->11[label = true]
+10[label = "a", shape = diamond]10->12[label= false]
+12->13
+12[label = "a=34", shape = "rectangle"]
+14->15
+14[label = "a--", shape = "rectangle"]
+13->14[label = true]
+13[label = "a", shape = diamond]13->15[label= false]
+       15[label = "b++", shape = "rectangle"]
+8->9[label="true"]
+8[label = "true",  shape = "diamond"]16->17
+16[label = "1+1", shape = "rectangle"]
+       18[label = "f (a,b)", shape = "rectangle"]
+17:s->18:n[label=true]
+17[label = "1+2", shape=diamond]18:w->17:w
+17[label = "1+2"]17:e->19[label = false]
+8->16[label="false"]
+15->19
+19->20
+19[label = "b=1", shape = "rectangle"]
+       21[label = "i++", shape = "rectangle"]
+20:s->21:n[label=true]
+20[label = "1", shape=diamond]21:w->20:w
+20[label = "1"]20:e->22[label = false]
+22->23
+22[label = "b=2", shape = "rectangle"]
+1->2[label = true]
+1[label = "a<2", shape = diamond]1->23[label= false]
+       24[label = "run=1", shape = "rectangle"]
+23->24[label="true"]
+23[label = "1+2",  shape = "diamond"]25->26
+25[label = "crash", shape = "rectangle"]
+23->25[label="false"]
+24->26
+26[label = "return 0", shape = "circle"]
 }

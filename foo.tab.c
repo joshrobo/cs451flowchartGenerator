@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -120,7 +120,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 1 "foo.y" /* yacc.c:355  */
@@ -132,6 +132,8 @@ union YYSTYPE
 
 #line 134 "foo.tab.c" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -154,7 +156,7 @@ int yyparse (void);
 	//recursive depth
 	int depth = 0;
 	//maximum recursive depth in this recursion
-	int maxdepth = 0;
+	//int maxdepth = 0;
 	//maximum node, place to continue after recursion complete
 	int maxnode = 0;
 	//assumes a recursive depth of less than 101
@@ -171,7 +173,7 @@ int yyparse (void);
 	long int pos = 0;
 	int lsize = 0;
 
-#line 175 "foo.tab.c" /* yacc.c:358  */
+#line 177 "foo.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -471,10 +473,10 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint16 yyrline[] =
 {
        0,    79,    79,    79,    81,    96,   100,   108,   115,   116,
-     117,   120,   121,   122,   127,   130,   133,   172,   177,   185,
-     225,   266,   306,   359,   436,   500,   501,   502,   545,   591,
-     594,   600,   606,   615,   623,   634,   644,   656,   657,   658,
-     659,   660,   666
+     117,   120,   121,   122,   127,   130,   133,   169,   174,   182,
+     219,   257,   294,   352,   430,   495,   496,   497,   542,   589,
+     592,   598,   604,   613,   621,   632,   642,   654,   655,   656,
+     657,   658,   664
 };
 #endif
 
@@ -1309,7 +1311,7 @@ yyreduce:
         case 3:
 #line 79 "foo.y" /* yacc.c:1646  */
     {cout << "ready" << endl; }
-#line 1313 "foo.tab.c" /* yacc.c:1646  */
+#line 1315 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
@@ -1328,13 +1330,13 @@ yyreduce:
 		
 		
 	}
-#line 1332 "foo.tab.c" /* yacc.c:1646  */
+#line 1334 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 96 "foo.y" /* yacc.c:1646  */
     { cout << "function defined" << endl;}
-#line 1338 "foo.tab.c" /* yacc.c:1646  */
+#line 1340 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
@@ -1344,7 +1346,7 @@ yyreduce:
 		fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", nc, nc + 1, nc, lookup((yyvsp[0].s)).c_str());
 		//nc++;
 	}
-#line 1348 "foo.tab.c" /* yacc.c:1646  */
+#line 1350 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
@@ -1354,69 +1356,66 @@ yyreduce:
 		fprintf(fchart, "%d->%d\n%d[label = \"%s\"]", nc, nc + 1, nc, lookup((yyvsp[0].s)).c_str());
 		//nc++;
 	}
-#line 1358 "foo.tab.c" /* yacc.c:1646  */
+#line 1360 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 115 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(lookup((yyvsp[-1].s))+lookup((yyvsp[0].s)));}
-#line 1364 "foo.tab.c" /* yacc.c:1646  */
+#line 1366 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 116 "foo.y" /* yacc.c:1646  */
     {save(lookup((yyvsp[-1].s))+ " " +lookup((yyvsp[0].s)));}
-#line 1370 "foo.tab.c" /* yacc.c:1646  */
+#line 1372 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 117 "foo.y" /* yacc.c:1646  */
     {(yyval.s) = save("");}
-#line 1376 "foo.tab.c" /* yacc.c:1646  */
+#line 1378 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 120 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(lookup((yyvsp[-1].s))+lookup((yyvsp[0].s)));}
-#line 1382 "foo.tab.c" /* yacc.c:1646  */
+#line 1384 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 121 "foo.y" /* yacc.c:1646  */
     {(yyval.s) = (yyvsp[0].s);}
-#line 1388 "foo.tab.c" /* yacc.c:1646  */
+#line 1390 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 122 "foo.y" /* yacc.c:1646  */
     {(yyval.s) = save("");}
-#line 1394 "foo.tab.c" /* yacc.c:1646  */
+#line 1396 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 127 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = saveBlock(lookupStatements((yyvsp[-1].s)));}
-#line 1400 "foo.tab.c" /* yacc.c:1646  */
+#line 1402 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 133 "foo.y" /* yacc.c:1646  */
     { 
 			//$$ = save(lookup($2)+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -1438,45 +1437,42 @@ yyreduce:
 			fprintf(fchart, "%d[label = \"return %s\", shape = \"circle\"]\n", current, lookup((yyvsp[0].s)).c_str());
 			
 		}
-#line 1442 "foo.tab.c" /* yacc.c:1646  */
+#line 1441 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 172 "foo.y" /* yacc.c:1646  */
+#line 169 "foo.y" /* yacc.c:1646  */
     { 
 									(yyval.s) = saveStatements(lookupStatements((yyvsp[-1].s)) + lookup((yyvsp[0].s)) + "\\n");
 									
 								}
-#line 1451 "foo.tab.c" /* yacc.c:1646  */
+#line 1450 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 177 "foo.y" /* yacc.c:1646  */
+#line 174 "foo.y" /* yacc.c:1646  */
     { 
 			(yyval.s) = saveStatements("");
 				
 		}
-#line 1460 "foo.tab.c" /* yacc.c:1646  */
+#line 1459 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 186 "foo.y" /* yacc.c:1646  */
+#line 183 "foo.y" /* yacc.c:1646  */
     { 
 			//$$ = save(lookup($1)+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -1498,27 +1494,24 @@ yyreduce:
 			fprintf(fchart, "%d[label = \"%s %s = %s\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-4].s)).c_str(), lookup((yyvsp[-3].s)).c_str(),lookup((yyvsp[-1].s)).c_str());
 			
 		}
-#line 1502 "foo.tab.c" /* yacc.c:1646  */
+#line 1498 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 226 "foo.y" /* yacc.c:1646  */
+#line 220 "foo.y" /* yacc.c:1646  */
     { 
 			(yyval.s) = save(lookup((yyvsp[-4].s))+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -1540,27 +1533,24 @@ yyreduce:
 			fprintf(fchart, "%d[label = \"%s (%s)\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-4].s)).c_str(), lookup((yyvsp[-2].s)).c_str());
 			
 		}
-#line 1544 "foo.tab.c" /* yacc.c:1646  */
+#line 1537 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 267 "foo.y" /* yacc.c:1646  */
+#line 258 "foo.y" /* yacc.c:1646  */
     { 
 			(yyval.s) = save(lookup((yyvsp[-6].s))+";");
-			//check if greatest recursive depth
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -1582,11 +1572,11 @@ yyreduce:
 			fprintf(fchart, "%d[label = \"%s = %s(%s)\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-6].s)).c_str(),lookup((yyvsp[-4].s)).c_str(),lookup((yyvsp[-2].s)).c_str());
 			
 		}
-#line 1586 "foo.tab.c" /* yacc.c:1646  */
+#line 1576 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 307 "foo.y" /* yacc.c:1646  */
+#line 295 "foo.y" /* yacc.c:1646  */
     {
 		//cout << depth << "\n";
 		//determine current node
@@ -1613,10 +1603,12 @@ yyreduce:
 		}
 		//connect false part to end of if statement
 		fprintf(fchart, "%d->%d[label= false]\n", current, maxnode);
-		//check if this is the maximum recursive depth
-		if(depth > maxdepth){
-			maxdepth = depth;
-		}
+
+
+		junk[depth - 1] += junk[depth];
+		junk[depth] = 0;
+		atDepth[depth - 1] += atDepth[depth];
+		atDepth[depth] = 0;
 
 		
 		//drop to next level
@@ -1624,24 +1616,27 @@ yyreduce:
 		
 		//reset everything if bottom of recursion
 		if(depth == 0) {
+/*
 			for(int i = maxdepth; i >= 0; i--) {
 				junk[i] = 0;
 			}
 			for(int i = maxdepth; i >= 0; i--) {
 				atDepth[i] = 0;
 			}
+*/
 			//set node count at end of recursion to highest numbered node
 			nc = maxnode - 1;
 			maxnode = 0;
 			junk[depth] = 0;
-			maxdepth = 0;
+			atDepth[depth] = 0;
+			//maxdepth = 0;
 		}
 	}
-#line 1641 "foo.tab.c" /* yacc.c:1646  */
+#line 1636 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 360 "foo.y" /* yacc.c:1646  */
+#line 353 "foo.y" /* yacc.c:1646  */
     {
 		if(junk[depth] > 0) {
 			int curPos = ftell(fchart);
@@ -1666,23 +1661,25 @@ yyreduce:
 		for(int i = depth - 1; i >= 0; i--) {
 			current += atDepth[i];
 		}
-		
+/*		
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
 		}
 
+
 		int something = current;
-		for(int i =depth; i <= maxdepth; i++) {
+		for(int i = depth; i <= depth; i++) {
 			something += atDepth[i];
 			something += junk[i];
 		}
+*/
 
 		//add node to graph linking to statements if true
 		if(junk[depth] > 0) {
 			fprintf(fchart, "%d:s->%d:n[label=true]\n%d[label = \"%s\", shape=diamond]", current, current + 1, current, lookup((yyvsp[-1].s)).c_str());
 
-			fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", something, current, current, lookup((yyvsp[-1].s)).c_str());
+			fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", current + junk[depth] + atDepth[depth], current, current, lookup((yyvsp[-1].s)).c_str());
 		}
 		else {
 			fprintf(fchart, "%d:w->%d:w[label=true]\n%d[label = \"%s\", shape=diamond]", current, current, current, lookup((yyvsp[-1].s)).c_str());	
@@ -1696,6 +1693,10 @@ yyreduce:
 		//connect false part to end of if statement
 		fprintf(fchart, "%d:e->%d[label = false]\n", current, maxnode);
 		
+		junk[depth - 1] += junk[depth];
+		junk[depth] = 0;
+		atDepth[depth - 1] += atDepth[depth];
+		atDepth[depth] = 0;
 
 		
 		//drop to next level
@@ -1703,24 +1704,19 @@ yyreduce:
 		
 		//reset everything if bottom of recursion
 		if(depth == 0) {
-			for(int i = maxdepth; i >= 0; i--) {
-				junk[i] = 0;
-			}
-			for(int i = maxdepth; i >= 0; i--) {
-				atDepth[i] = 0;
-			}
+
 			//set node count at end of recursion to highest numbered node
 			nc = maxnode - 1;
 			maxnode = 0;
 			junk[depth] = 0;
-			maxdepth = 0;
+			atDepth[depth] = 0;
 		}
 	}
-#line 1720 "foo.tab.c" /* yacc.c:1646  */
+#line 1716 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 437 "foo.y" /* yacc.c:1646  */
+#line 431 "foo.y" /* yacc.c:1646  */
     {
 		
 		//cout << depth << "\n";
@@ -1755,11 +1751,16 @@ yyreduce:
 		else {
 			fprintf(fchart, "%d->%d[label=\"true\"]\n%d[label = \"%s\",  shape = \"diamond\"]", current, maxnode, current, lookup((yyvsp[-2].s)).c_str());
 		}
-
+/*
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
 		}
+*/
+		junk[depth - 1] += junk[depth];
+		junk[depth] = 0;
+		atDepth[depth - 1] += atDepth[depth];
+		atDepth[depth] = 0;
 
 		
 		//drop to next level
@@ -1767,43 +1768,41 @@ yyreduce:
 		
 		//reset everything if bottom of recursion
 		if(depth == 0) {
-			for(int i = maxdepth; i >= 0; i--) {
-				junk[i] = 0;
-			}
-			for(int i = maxdepth; i >= 0; i--) {
-				atDepth[i] = 0;
-			}
+/*
 			for(int i = maxdepth; i >= 0; i--) {
 				storeCurrent[i] = 0;
 			}
+*/
 			//set node count at end of recursion to highest numbered node
 			nc = maxnode - 1;
 			maxnode = 0;
 			junk[depth] = 0;
-			maxdepth = 0;
+			atDepth[depth] = 0;
 		}
 	}
-#line 1787 "foo.tab.c" /* yacc.c:1646  */
+#line 1784 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 503 "foo.y" /* yacc.c:1646  */
+#line 498 "foo.y" /* yacc.c:1646  */
     { 
 			(yyval.s) = save(lookup((yyvsp[-1].s))+";");
 			//check if greatest recursive depth
+/*
 			if(depth > maxdepth){
 				maxdepth = depth;
 			}
-			//get current node
+*/
+			//get current top node
 			int current = nc;
 			//increment number of junk nodes at this level
 			junk[depth]++;
 			//add number of junk nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 				current += junk[i];
 			}
 			//add number of control nodes at all reached recursive levels
-			for(int i = maxdepth; i >= 0; i--) {
+			for(int i = depth; i >= 0; i--) {
 			current += atDepth[i];
 			}
 			//if this is the last node increase last node
@@ -1825,11 +1824,11 @@ yyreduce:
 			fprintf(fchart, "%d[label = \"%s\", shape = \"rectangle\"]\n", current, lookup((yyvsp[-1].s)).c_str());
 			
 		}
-#line 1829 "foo.tab.c" /* yacc.c:1646  */
+#line 1828 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 546 "foo.y" /* yacc.c:1646  */
+#line 543 "foo.y" /* yacc.c:1646  */
     {
 		if(junk[depth] > 0) {
 			int curPos = ftell(fchart);
@@ -1863,27 +1862,28 @@ yyreduce:
 		if(current + 1 + junk[depth] > maxnode) {
 			maxnode = current + junk[depth] + 1;
 		}
-
+/*
 		//check if this is the maximum recursive depth
 		if(depth > maxdepth){
 			maxdepth = depth;
 		}
+*/
 
 		//store the first node of the second side
-		storeCurrent[depth - 1] = maxnode;
+		storeCurrent[depth - 1] = current + 1 + junk[depth] + atDepth[depth];
 
 	}
 #line 1877 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 591 "foo.y" /* yacc.c:1646  */
+#line 589 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(lookup((yyvsp[0].s))); }
 #line 1883 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 594 "foo.y" /* yacc.c:1646  */
+#line 592 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += lookupOP((yyvsp[-1].s));
 			  	  s += lookup((yyvsp[0].s));
@@ -1892,7 +1892,7 @@ yyreduce:
     break;
 
   case 31:
-#line 600 "foo.y" /* yacc.c:1646  */
+#line 598 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += lookupOP((yyvsp[-1].s));
 			  	  s += lookup((yyvsp[0].s));
@@ -1902,7 +1902,7 @@ yyreduce:
     break;
 
   case 32:
-#line 606 "foo.y" /* yacc.c:1646  */
+#line 604 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += "=";
 			  	  s += lookup((yyvsp[0].s));
@@ -1912,7 +1912,7 @@ yyreduce:
     break;
 
   case 33:
-#line 615 "foo.y" /* yacc.c:1646  */
+#line 613 "foo.y" /* yacc.c:1646  */
     { 
 					(yyval.s) = save(lookup((yyvsp[-1].s))); 
 					//increment number of control nodes at this depth and increment depth
@@ -1923,7 +1923,7 @@ yyreduce:
     break;
 
   case 34:
-#line 623 "foo.y" /* yacc.c:1646  */
+#line 621 "foo.y" /* yacc.c:1646  */
     { 
 								string s = lookup((yyvsp[-3].s)); 
 						  	  	s += lookupOP((yyvsp[-2].s));
@@ -1937,7 +1937,7 @@ yyreduce:
     break;
 
   case 35:
-#line 634 "foo.y" /* yacc.c:1646  */
+#line 632 "foo.y" /* yacc.c:1646  */
     {
 								string s = lookup((yyvsp[-3].s)); 
 					  	  		s += lookupOP((yyvsp[-2].s));
@@ -1951,7 +1951,7 @@ yyreduce:
     break;
 
   case 36:
-#line 644 "foo.y" /* yacc.c:1646  */
+#line 642 "foo.y" /* yacc.c:1646  */
     {
 								string s = lookup((yyvsp[-3].s)); 
 					  	  		s += "=";
@@ -1965,31 +1965,31 @@ yyreduce:
     break;
 
   case 37:
-#line 656 "foo.y" /* yacc.c:1646  */
+#line 654 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(to_string((yyvsp[0].i))); }
 #line 1971 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 657 "foo.y" /* yacc.c:1646  */
+#line 655 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = save(to_string((yyvsp[0].x))); }
 #line 1977 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 658 "foo.y" /* yacc.c:1646  */
+#line 656 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = (yyvsp[0].s);}
 #line 1983 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 659 "foo.y" /* yacc.c:1646  */
+#line 657 "foo.y" /* yacc.c:1646  */
     { (yyval.s) = (yyvsp[0].s);}
 #line 1989 "foo.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 660 "foo.y" /* yacc.c:1646  */
+#line 658 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-2].s)); 
 			  	  s += lookupOP((yyvsp[-1].s));
 			  	  s += lookup((yyvsp[0].s));
@@ -1999,7 +1999,7 @@ yyreduce:
     break;
 
   case 42:
-#line 666 "foo.y" /* yacc.c:1646  */
+#line 664 "foo.y" /* yacc.c:1646  */
     { string s = lookup((yyvsp[-1].s)); 
 			  	  s += lookupOP((yyvsp[0].s));
 			 	  (yyval.s) = save(s); 
@@ -2236,7 +2236,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 671 "foo.y" /* yacc.c:1906  */
+#line 669 "foo.y" /* yacc.c:1906  */
 
 
 
