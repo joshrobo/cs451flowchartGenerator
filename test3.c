@@ -31,9 +31,33 @@ if(a<2){
 	
 }
 if(1+2){
-	run=1;
+	3+4;
 }
-else crash;
+else {
+while(true){
+	while(true){
+		l = i-2;
+		if(true){
+			if(false){
+				if(1+2){
+					j *= t-y+4-l+7/4;
+					if(a){la = f(3,m);}
+					f-1;
+				}
+				else{
+					while(2){
+						x=2;}
+					t++;}
+				}
+			}
+			else{}
+			t++;
+			if(4+m)run(23,b);
+			b--;
+		}
+		test++;
+	}
+}
 
 return 0;
 }

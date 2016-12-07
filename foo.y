@@ -70,6 +70,12 @@
 	//stores the current file position for rewinding at the end of while and if else statements
 	long int pos = 0;
 	int lsize = 0;
+
+	long int pos2 = 0;
+	int lsize2 = 0;
+
+	int ltype[100];
+	int ltypeSize = sizeof(ltype)/sizeof(ltype[0]);
 %}
 
 
@@ -83,17 +89,18 @@ fndef: void '(' params ')' block
 		if(junk[0] != 0) {
 			nc = nc + junk[0] + 1;
 			junk[0] = 0;
-			fprintf(fchart, "%d[label = \"end_void\"]", nc);
+			fprintf(fchart, "%d[label = \"\"]", nc);
 
 		}
 		else {
-			fprintf(fchart, "%d[label = \"end_void\"]", nc + 1);
+			fprintf(fchart, "%d[label = \"\"]", nc + 1);
 		}
 		
 		
 		
 	}
-	| type '(' params ')' returnblock { cout << "function defined" << endl;}
+	| type '(' params ')' returnblock 	{ //cout << "function defined" << endl;
+										}
        	;
 
 void:
@@ -183,6 +190,9 @@ statement:
 		{ 
 			//$$ = save(lookup($1)+";");
 
+			ltype[depth] = 1;
+
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
@@ -219,6 +229,9 @@ statement:
 	| ID'('callparams')'';'
 		{ 
 			$$ = save(lookup($1)+";");
+
+			ltype[depth] = 1;
+
 
 			//get current node
 			int current = nc;
@@ -258,6 +271,9 @@ statement:
 		{ 
 			$$ = save(lookup($1)+";");
 
+			ltype[depth] = 1;
+
+
 			//get current node
 			int current = nc;
 			//increment number of junk nodes at this level
@@ -293,6 +309,8 @@ statement:
 	//if expression		
 	| IF sexpr statement 	
 	{
+
+
 		//cout << depth << "\n";
 		//determine current node
 		int current = nc;
@@ -308,17 +326,35 @@ statement:
 			current += atDepth[i];
 		}
 
-		//add node to graph linking to statements if true
-		fprintf(fchart, "%d->%d[label = true]\n%d[label = \"%s\", shape = diamond]", current, current + 1, current, lookup($2).c_str());
+		if(ltype[depth] == 0) {
+			pos = ftell(fchart);
+		}
 
+		//add node to graph linking to statements if true
+		fprintf(fchart, "%d->%d[label = true]\n", current, current + 1);
+
+		if(ltype[depth] == 0) {
+			lsize = ftell(fchart) - pos;
+		}
+
+		fprintf(fchart, "%d[label = \"%s\", shape = diamond]", current, lookup($2).c_str());
 
 		//check if end node highest, else swap end node
 		if(current + junk[depth] + 1 > maxnode) {
 			maxnode = current + junk[depth] + 1;
 		}
+
+		//store position to rewind if need
+		pos2 = ftell(fchart);
+
 		//connect false part to end of if statement
 		fprintf(fchart, "%d->%d[label= false]\n", current, maxnode);
 
+		lsize2 = ftell(fchart) - pos;
+
+
+		ltype[depth - 1] = 4;
+		ltype[depth] = 0;
 
 		junk[depth - 1] += junk[depth];
 		junk[depth] = 0;
@@ -331,14 +367,7 @@ statement:
 		
 		//reset everything if bottom of recursion
 		if(depth == 0) {
-/*
-			for(int i = maxdepth; i >= 0; i--) {
-				junk[i] = 0;
-			}
-			for(int i = maxdepth; i >= 0; i--) {
-				atDepth[i] = 0;
-			}
-*/
+
 			//set node count at end of recursion to highest numbered node
 			nc = maxnode - 1;
 			maxnode = 0;
@@ -351,14 +380,26 @@ statement:
 	//while expression
 	| WHILE sexpr statement 	
 	{
-		if(junk[depth] > 0) {
+
+		if(ltype[depth] != 0) {
 			int curPos = ftell(fchart);
 			fseek(fchart, pos, SEEK_SET);
 			for(int i = 0; i < lsize; i++) {
 				fprintf(fchart, " ");
 			}
 			fseek(fchart, curPos, SEEK_SET);
+
+			if(ltype[depth] == 4) {
+				int curPos = ftell(fchart);
+				fseek(fchart, pos2, SEEK_SET);
+				for(int i = 0; i < lsize2; i++) {
+					fprintf(fchart, " ");
+				}
+				fseek(fchart, curPos, SEEK_SET);
+			}
 		}
+
+
 
 		//cout << depth << "\n";
 		//determine current node
@@ -374,43 +415,58 @@ statement:
 		for(int i = depth - 1; i >= 0; i--) {
 			current += atDepth[i];
 		}
-/*		
-		//check if this is the maximum recursive depth
-		if(depth > maxdepth){
-			maxdepth = depth;
-		}
 
-
-		int something = current;
-		for(int i = depth; i <= depth; i++) {
-			something += atDepth[i];
-			something += junk[i];
-		}
-*/
 
 		//add node to graph linking to statements if true
-		if(junk[depth] > 0) {
+		if(ltype[depth] != 0) {
 			fprintf(fchart, "%d:s->%d:n[label=true]\n%d[label = \"%s\", shape=diamond]", current, current + 1, current, lookup($2).c_str());
 
-			fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", current + junk[depth] + atDepth[depth], current, current, lookup($2).c_str());
+
+
+			if(ltype[depth] == 1) {
+				fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", current + junk[depth] + atDepth[depth], current, current, lookup($2).c_str());
+			}
+			if(ltype[depth] == 2) {
+				fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", current + storeCurrent[depth - 2], current, current, lookup($2).c_str());
+				fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", current + junk[depth] + atDepth[depth], current, current, lookup($2).c_str());
+			}
+			if(ltype[depth] == 3) {
+				fprintf(fchart, "%d:w->%d:w[label = false]\n%d[label = \"%s\"]", current + atDepth[depth - 1], current, current, lookup($2).c_str());
+			}
+			if(ltype[depth] == 4) {
+				fprintf(fchart, "%d:w->%d:w[label = false]\n%d[label = \"%s\"]", current + atDepth[depth], current, current, lookup($2).c_str());
+				fprintf(fchart, "%d:w->%d:w\n%d[label = \"%s\"]", current + junk[depth] + atDepth[depth], current, current, lookup($2).c_str());
+			}
+
 		}
 		else {
 			fprintf(fchart, "%d:w->%d:w[label=true]\n%d[label = \"%s\", shape=diamond]", current, current, current, lookup($2).c_str());	
 		}
 
 
+		ltype[depth - 1] = 3;
+		ltype[depth] = 0;
+
+
 		//check if end node highest, else swap end node
 		if(current + junk[depth] + 1 > maxnode) {
 			maxnode = current + junk[depth] + 1;
 		}
-		//connect false part to end of if statement
+
+		//store position to rewind if need
+		pos = ftell(fchart);
+
+		//connect false part to next node
 		fprintf(fchart, "%d:e->%d[label = false]\n", current, maxnode);
+
+		lsize = ftell(fchart) - pos;
 		
 		junk[depth - 1] += junk[depth];
 		junk[depth] = 0;
 		atDepth[depth - 1] += atDepth[depth];
 		atDepth[depth] = 0;
 
+		
 		
 		//drop to next level
 		depth--;
@@ -430,6 +486,8 @@ statement:
     | IF else statement 
 	{
 		
+
+
 		//cout << depth << "\n";
 		//determine current node
 		int current = nc;
@@ -444,6 +502,8 @@ statement:
 		for(int i = depth - 1; i >= 0; i--) {
 			current += atDepth[i];
 		}
+
+
 
 		//link the top node of the if statement stored in storeCurrent to the first node of the else side
 		fprintf(fchart, "%d->%d[label=\"false\"]\n", current, storeCurrent[depth - 1]);
@@ -460,14 +520,18 @@ statement:
 
 		}
 		else {
-			fprintf(fchart, "%d->%d[label=\"true\"]\n%d[label = \"%s\",  shape = \"diamond\"]", current, maxnode, current, lookup($1).c_str());
+			//store position to rewind if need
+			pos = ftell(fchart);
+
+			fprintf(fchart, "%d->%d[label=\"true\"]\n", current, maxnode);
+
+			lsize = ftell(fchart) - pos;
 		}
-/*
-		//check if this is the maximum recursive depth
-		if(depth > maxdepth){
-			maxdepth = depth;
-		}
-*/
+
+		ltype[depth - 1] = 2;
+		ltype[depth] = 0;
+
+
 		junk[depth - 1] += junk[depth];
 		junk[depth] = 0;
 		atDepth[depth - 1] += atDepth[depth];
@@ -498,11 +562,9 @@ statement:
 		{ 
 			$$ = save(lookup($1)+";");
 			//check if greatest recursive depth
-/*
-			if(depth > maxdepth){
-				maxdepth = depth;
-			}
-*/
+
+			ltype[depth] = 1;
+
 			//get current top node
 			int current = nc;
 			//increment number of junk nodes at this level
@@ -541,13 +603,25 @@ statement:
 else:
 	sexpr statement ELSE
 	{
-		if(junk[depth] > 0) {
+		if(ltype[depth] != 0) {
 			int curPos = ftell(fchart);
 			fseek(fchart, pos, SEEK_SET);
 			for(int i = 0; i < lsize; i++) {
 				fprintf(fchart, " ");
 			}
 			fseek(fchart, curPos, SEEK_SET);
+
+			if(ltype[depth] == 4) {
+				int curPos = ftell(fchart);
+				fseek(fchart, pos2, SEEK_SET);
+				for(int i = 0; i < lsize2; i++) {
+					fprintf(fchart, " ");
+				}
+				fseek(fchart, curPos, SEEK_SET);
+				
+			}
+
+
 		}
 		
 		//cout << depth << "\n";
@@ -565,23 +639,27 @@ else:
 			current += atDepth[i];
 		}
 		
-		//add node to graph linking to statements if true
-		fprintf(fchart, "%d->%d[label=\"true\"]\n%d[label = \"%s\",  shape = \"diamond\"]", current, current + 1, current, lookup($1).c_str());
+		
+
+		if(ltype[depth] != 0) {
+			//add node to graph linking to statements if true
+			fprintf(fchart, "%d->%d[label=\"true\"]\n%d[label = \"%s\",  shape = \"diamond\"]", current, current + 1, current, lookup($1).c_str());
+		}
+		else {
+			fprintf(fchart, "%d[label = \"%s\",  shape = \"diamond\"]", current, lookup($1).c_str());
+		}
 
 
 		//check if end node highest, else swap end node
 		if(current + 1 + junk[depth] > maxnode) {
 			maxnode = current + junk[depth] + 1;
 		}
-/*
-		//check if this is the maximum recursive depth
-		if(depth > maxdepth){
-			maxdepth = depth;
-		}
-*/
+
 
 		//store the first node of the second side
 		storeCurrent[depth - 1] = current + 1 + junk[depth] + atDepth[depth];
+
+
 
 	};
 
@@ -686,6 +764,9 @@ int main(void) {
 	}
 	for(int i = 0; i < storeCurrentSize; i++) {
 		storeCurrent[i] = 0;
+	}
+	for(int i = 0; i < ltypeSize; i++) {
+		ltype[i] = 0;
 	}
 
 	yyparse();
