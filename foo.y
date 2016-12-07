@@ -303,7 +303,7 @@ statement:
 		}
 
 	//if expression		
-	| IF sexpr block 	
+	| IF sexpr statement 	
 	{
 		//cout << depth << "\n";
 		//determine current node
@@ -356,7 +356,7 @@ statement:
 	}
 
 	//while expression
-	| WHILE sexpr block 	
+	| WHILE sexpr statement 	
 	{
 		if(junk[depth] > 0) {
 			int curPos = ftell(fchart);
@@ -433,7 +433,7 @@ statement:
 	}
 
 	//if_else expression
-    | IF else block 
+    | IF else statement 
 	{
 		
 		//cout << depth << "\n";
