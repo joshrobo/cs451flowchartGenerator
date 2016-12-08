@@ -71,8 +71,7 @@
 	long int pos = 0;
 	int lsize = 0;
 
-	long int pos2 = 0;
-	int lsize2 = 0;
+
 
 	int ltype[100];
 	int ltypeSize = sizeof(ltype)/sizeof(ltype[0]);
@@ -344,13 +343,12 @@ statement:
 			maxnode = current + junk[depth] + 1;
 		}
 
-		//store position to rewind if need
-		pos2 = ftell(fchart);
+
 
 		//connect false part to end of if statement
 		fprintf(fchart, "%d->%d[label= false]\n", current, maxnode);
 
-		lsize2 = ftell(fchart) - pos;
+
 
 
 		ltype[depth - 1] = 4;
@@ -389,14 +387,7 @@ statement:
 			}
 			fseek(fchart, curPos, SEEK_SET);
 
-			if(ltype[depth] == 4) {
-				int curPos = ftell(fchart);
-				fseek(fchart, pos2, SEEK_SET);
-				for(int i = 0; i < lsize2; i++) {
-					fprintf(fchart, " ");
-				}
-				fseek(fchart, curPos, SEEK_SET);
-			}
+
 		}
 
 
@@ -610,16 +601,6 @@ else:
 				fprintf(fchart, " ");
 			}
 			fseek(fchart, curPos, SEEK_SET);
-
-			if(ltype[depth] == 4) {
-				int curPos = ftell(fchart);
-				fseek(fchart, pos2, SEEK_SET);
-				for(int i = 0; i < lsize2; i++) {
-					fprintf(fchart, " ");
-				}
-				fseek(fchart, curPos, SEEK_SET);
-				
-			}
 
 
 		}

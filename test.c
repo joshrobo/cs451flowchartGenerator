@@ -1,5 +1,11 @@
 int main(){
-if(a < 2)a = 1+2;
+if(a) 
+	if (b) 
+		if(c) f();
+		
+
+	
+else g();
 
 return 0;
 }

@@ -3,10 +3,10 @@ if(a<2){
 	if(true){
 		a+1;
 		
-		{if(a){a--;}
+		if(a){a--;}
 
 		a = 34;
-		}
+		
 	}
 	b++;
 	if(true){
@@ -34,20 +34,23 @@ if(1+2){
 	3+4;
 }
 else {
-while(true){
 	while(true){
-		l = i-2;
-		if(true){
-			if(false){
-				if(1+2){
-					j *= t-y+4-l+7/4;
-					if(a){la = f(3,m);}
-					f-1;
-				}
-				else{
-					while(2){
-						x=2;}
-					t++;}
+		while(true){
+			l = i-2;
+			if(true){
+				if(false){
+					if(1+2){
+						j *= t-y+4-l+7/4;
+						if(a){la = f(3,m);}
+						f-1;
+					}
+					else{
+						while(2){
+							x=2;
+						}
+						t++;
+					}
+                                        {1;}
 				}
 			}
 			else{}
@@ -57,7 +60,7 @@ while(true){
 		}
 		test++;
 	}
-}
 
+}
 return 0;
 }

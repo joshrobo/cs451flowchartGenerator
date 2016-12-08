@@ -22,4 +22,6 @@ Use the following command to install the neccessary tools + repository: <b>sh in
 <li>bison</li>
 <li>flex</li>
 </ul>
->>>>>>> e1af1da07d0754c19346c194bafa010e87890907
+
+<h2>Know Bugs</h2>
+-buffer nodes or junk nodes needed succeeding a nested control statement

@@ -45,11 +45,47 @@ node [shape=circle]
 22[label = "b=2", shape = "rectangle"]
 1->2[label = true]
 1[label = "a<2", shape = diamond]1->23[label= false]
-       24[label = "run=1", shape = "rectangle"]
+       24[label = "3+4", shape = "rectangle"]
 23->24[label="true"]
-23[label = "1+2",  shape = "diamond"]25->26
-25[label = "crash", shape = "rectangle"]
+23[label = "1+2",  shape = "diamond"]27->28
+27[label = "l=i-2", shape = "rectangle"]
+31->32
+31[label = "j*=t-y+4-l+7/4", shape = "rectangle"]
+33->34
+33[label = "la = f(3,m)", shape = "rectangle"]
+32->33[label = true]
+32[label = "a", shape = diamond]32->34[label= false]
+       34[label = "f-1", shape = "rectangle"]
+30->31[label="true"]
+30[label = "1+2",  shape = "diamond"]       36[label = "x=2", shape = "rectangle"]
+35:s->36:n[label=true]
+35[label = "2", shape=diamond]36:w->35:w
+35[label = "2"]35:e->37[label = false]
+37->38
+37[label = "t++", shape = "rectangle"]
+30->35[label="false"]
+34->38
+       38[label = "1", shape = "rectangle"]
+29->30[label = true]
+29[label = "false", shape = diamond]29->39[label= false]
+28->29[label="true"]
+28[label = "true",  shape = "diamond"]28->39[label="false"]
+38->39
+39->40
+39[label = "t++", shape = "rectangle"]
+41->42
+41[label = "run (23,b)", shape = "rectangle"]
+40->41[label = true]
+40[label = "4+m", shape = diamond]40->42[label= false]
+       42[label = "b--", shape = "rectangle"]
+26:s->27:n[label=true]
+26[label = "true", shape=diamond]42:w->26:w
+26[label = "true"]26:e->43[label = false]
+       43[label = "test++", shape = "rectangle"]
+25:s->26:n[label=true]
+25[label = "true", shape=diamond]43:w->25:w
+25[label = "true"]25:e->44[label = false]
 23->25[label="false"]
-24->26
-26[label = "return 0", shape = "circle"]
+24->44
+44[label = "return 0", shape = "circle"]
 }

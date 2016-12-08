@@ -29,13 +29,13 @@ else		{return ELSE;}
 		return CHAR;
 }
 		
-(((int|char|short|long|double|float)(\*)*[ ]+[a-zA-Z_]+[ ]*,[ ]*)*)  {
+(((int|char|short|long|double|float)(\*)*[ ]+([0-9]|[a-zA-Z_])+[ ]*,[ ]*)*)  {
 				string s = yytext;
 				yylval.s = save(s); 
 		           	return PARAMS;
 				}
 
-(([a-zA-Z_]+[ ]*,[ ]*)*)  {
+((([0-9]|[a-zA-Z_])+[ ]*,[ ]*)*)  {
 				string s = yytext;
 				yylval.s = save(s); 
 		           	return CALLPARAMS;
